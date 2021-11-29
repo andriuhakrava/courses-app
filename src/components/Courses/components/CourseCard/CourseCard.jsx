@@ -35,19 +35,14 @@ const CourseCard = ({
 
 	const formatAuthors = (authors) => {
 		let authorsFormatted = [];
+
 		authors.forEach((author) => {
 			authorsFormatted.push(author.name);
 		});
 
 		authorsFormatted = authorsFormatted.join(', ');
 
-		let authorsFormattedCut = authorsFormatted.slice(0, 31).trim();
-
-		if (authorsFormattedCut.slice(-1) === ',') {
-			authorsFormattedCut = authorsFormattedCut.slice(0, -1);
-		}
-
-		return `${authorsFormattedCut}...`;
+		return authorsFormatted;
 	};
 
 	useEffect(() => {
@@ -76,7 +71,7 @@ const CourseCard = ({
 				<p>{description}</p>
 			</div>
 			<div className='course-parameters'>
-				<div className='course-parameters__item'>
+				<div className='course-parameters__item course-parameters__item--fixedcut'>
 					<h3>Authors:</h3>
 					<span className='course-parameters__authors'>{courseAuthors}</span>
 				</div>

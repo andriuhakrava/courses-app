@@ -26,6 +26,13 @@ export const Content = styled.div`
 		}
 	}
 
+	.course-parameters__item--fixedcut {
+		width: 400px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
 	h3 {
 		display: inline-block;
 		margin-right: 6px;
