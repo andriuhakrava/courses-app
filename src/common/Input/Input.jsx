@@ -41,14 +41,6 @@ const Input = ({
 				onKeyDown={onKeyDown}
 			/>
 		)}
-		{inputType === 'submit' && (
-			<input
-				type={inputType}
-				id={inputName}
-				name={inputName}
-				value={inputValue}
-			/>
-		)}
 	</InputStyled>
 );
 

@@ -34,11 +34,7 @@ const CreateCourse = ({
 								/>
 							</div>
 							<div className='course-info__col course-info__col--endcontent'>
-								<Input
-									inputType='submit'
-									inputName='addCourse'
-									inputValue='Create Course'
-								/>
+								<Button type='submit' buttonText='Create Course' />
 							</div>
 						</div>
 						<div className='course-info__row course-info__row--full'>
