@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper } from './SearchBar';
+import { Wrapper } from './SearchBar.style.js';
 
 import Input from '../../../../common/Input/Input.jsx';
 import Button from '../../../../common/Button/Button.jsx';

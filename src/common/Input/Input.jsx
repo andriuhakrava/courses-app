@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { InputStyled } from './Input';
+import { InputStyled } from './Input.style.js';
 
 const Input = ({
 	inputType,

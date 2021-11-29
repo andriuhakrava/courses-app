@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Wrapper, Content } from './CreateCourse';
+import { Wrapper, Content } from './CreateCourse.style.js';
 
 import Input from '../../common/Input/Input.jsx';
 import Button from '../../common/Button/Button.jsx';

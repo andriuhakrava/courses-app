@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import formatDate from '../../../../helpers/dateGenerator';
 import formatDuration from '../../../../helpers/pipeDuration';
 
-import { Content } from './CourseCard';
+import { Content } from './CourseCard.style.js';
 
 import Button from '../../../../common/Button/Button.jsx';
 

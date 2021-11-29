@@ -10,7 +10,7 @@ import {
 
 import formatDuration from '../../helpers/pipeDuration';
 
-import { Wrapper, Content } from './Courses';
+import { Wrapper, Content } from './Courses.style.js';
 
 import SearchBar from './components/SearchBar/SearchBar.jsx';
 import Button from '../../common/Button/Button.jsx';

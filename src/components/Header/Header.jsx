@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { HeaderStyled, Content } from './Header';
+import { HeaderStyled, Content } from './Header.style.js';
 
 import Logo from './components/Logo/Logo.jsx';
 import Button from '../../common/Button/Button.jsx';
