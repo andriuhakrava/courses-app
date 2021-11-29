@@ -7,14 +7,9 @@ import { Content } from './CourseCard.style.js';
 
 import Button from '../../../../common/Button/Button.jsx';
 
-const CourseCard = ({
-	title,
-	description,
-	authors,
-	authorsMockedList,
-	duration,
-	creationDate,
-}) => {
+const CourseCard = ({ authorsMockedList, course }) => {
+	const { title, description, authors, duration, creationDate } = course;
+
 	const [courseDuration, setCourseDuration] = useState(duration);
 	const [courseCreationDate, setCourseCreationDate] = useState(creationDate);
 	const [courseAuthors, setCourseAuthors] = useState('');

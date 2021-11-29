@@ -6,13 +6,8 @@ const CoursesList = ({ courses, authorsList }) => {
 	const coursesList = courses.map((course) => (
 		<CourseCard
 			key={course.id}
-			title={course.title}
-			description={course.description}
-			authors={course.authors}
 			authorsMockedList={authorsList}
-			duration={course.duration}
-			creationDate={course.creationDate}
-			courses={courses}
+			course={course}
 		/>
 	));
 
