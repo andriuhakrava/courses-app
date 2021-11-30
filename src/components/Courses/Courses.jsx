@@ -18,7 +18,7 @@ import CoursesList from './components/CoursesList/CoursesList.jsx';
 import CreateCourse from '../CreateCourse/CreateCourse.jsx';
 
 const Courses = () => {
-	const [searchedCourse, setSearchedCourse] = useState('');
+	const [searchQuery, setSearchQuery] = useState('');
 	const [courses, setCourses] = useState(mockedCoursesList);
 	const [courseDuration, setCourseDuration] = useState(0);
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
@@ -70,10 +70,10 @@ const Courses = () => {
 	};
 
 	const handleSearchChange = (e) => {
-		setSearchedCourse(e.target.value);
+		setSearchQuery(e.target.value);
 
 		if (e.target.value === '') {
-			setCourses([...courses, ...mockedCoursesList]);
+			setCourses([...mockedCoursesList]);
 		}
 	};
 
@@ -89,12 +89,12 @@ const Courses = () => {
 	const handleSearchSubmit = (e) => {
 		e.preventDefault();
 
-		if (searchedCourse.length === 0) {
+		if (searchQuery.length === 0) {
 			alert('Please, fill in search field!');
 			return;
 		}
 
-		const searchedCourseFormatted = searchedCourse.toLowerCase();
+		const searchedCourseFormatted = searchQuery.toLowerCase();
 
 		const coursesFiltered = courses.filter((item) =>
 			findCourse(searchedCourseFormatted, item)
@@ -205,6 +205,7 @@ const Courses = () => {
 		}
 
 		setCourses([...courses, courseFormData]);
+		mockedCoursesList.push(courseFormData);
 
 		setCourseAuthor([]);
 		setAuthorsList(mockedAuthorsList);
@@ -218,7 +219,7 @@ const Courses = () => {
 				<>
 					<Wrapper>
 						<SearchBar
-							valueSearched={searchedCourse}
+							valueSearched={searchQuery}
 							handleChange={handleSearchChange}
 							handleSubmit={handleSearchSubmit}
 						/>
