@@ -5,7 +5,7 @@ import { Wrapper } from './SearchBar.style.js';
 import Input from '../../../../common/Input/Input.jsx';
 import Button from '../../../../common/Button/Button.jsx';
 
-const SearchBar = ({ valueSearched, handleChange, handleSubmit }) => (
+const SearchBar = ({ searchQuery, handleChange, handleSubmit }) => (
 	<Wrapper>
 		<form onSubmit={handleSubmit}>
 			<Input
@@ -13,7 +13,7 @@ const SearchBar = ({ valueSearched, handleChange, handleSubmit }) => (
 				labelText=''
 				inputName='courseName'
 				inputPlaceholder='Enter course name or id...'
-				value={valueSearched}
+				value={searchQuery}
 				onChange={handleChange}
 			/>
 			<Button buttonType='submit' buttonText='Search' />
