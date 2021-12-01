@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -28,6 +28,22 @@ const CreateCourse = ({ courseDurationDefault }) => {
 	const [courseAuthor, setCourseAuthor] = useState([]);
 
 	const [isFormShow, setIsFormShow] = useState(true);
+
+	useEffect(() => {
+		const authorsIds = [];
+		courseAuthor.forEach((item) => {
+			if (item.id) {
+				authorsIds.push(item.id);
+			}
+		});
+
+		setNewCourse((newCourse) => {
+			return {
+				...newCourse,
+				authors: authorsIds,
+			};
+		});
+	}, [courseAuthor]);
 
 	const createNewAuthor = (e) => {
 		e.preventDefault();
@@ -121,19 +137,6 @@ const CreateCourse = ({ courseDurationDefault }) => {
 			);
 			return;
 		}
-
-		const authorsIds = [];
-
-		courseAuthor.forEach((item) => {
-			if (item.id) {
-				authorsIds.push(item.id);
-			}
-		});
-
-		setNewCourse({
-			...newCourse,
-			authors: [...authorsIds],
-		});
 
 		if (newCourse.authors.length === 0) {
 			alert('Please add course author!');
