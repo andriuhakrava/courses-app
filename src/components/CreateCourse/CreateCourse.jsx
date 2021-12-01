@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -25,25 +25,8 @@ const CreateCourse = ({ courseDurationDefault }) => {
 
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 	const [author, setAuthor] = useState({});
-	const [courseAuthor, setCourseAuthor] = useState([]);
 
 	const [isFormShow, setIsFormShow] = useState(true);
-
-	useEffect(() => {
-		const authorsIds = [];
-		courseAuthor.forEach((item) => {
-			if (item.id) {
-				authorsIds.push(item.id);
-			}
-		});
-
-		setNewCourse((newCourse) => {
-			return {
-				...newCourse,
-				authors: authorsIds,
-			};
-		});
-	}, [courseAuthor]);
 
 	const createNewAuthor = (e) => {
 		e.preventDefault();
@@ -70,27 +53,33 @@ const CreateCourse = ({ courseDurationDefault }) => {
 	const addCourseAuthor = (e, id) => {
 		e.preventDefault();
 
-		const name = e.target.parentElement.previousElementSibling.innerText;
-		const author = {
-			id,
-			name,
-		};
-		const authorsListAfterDelete = authorsList.filter(
+		const author = authorsList.find((el) => el.id === id);
+		const authorsListAfterAdd = authorsList.filter(
 			(author) => author.id !== id
 		);
 
-		setAuthorsList(authorsListAfterDelete);
-		setCourseAuthor([...courseAuthor, author]);
+		setAuthorsList(authorsListAfterAdd);
+		setNewCourse((prevState) => {
+			return {
+				...newCourse,
+				authors: [...prevState.authors, author],
+			};
+		});
 	};
 
 	const deleteCourseAuthor = (e, id) => {
 		e.preventDefault();
 
-		const authorAfterDelete = courseAuthor.filter((author) => author.id !== id);
-		const authorDeleted = courseAuthor.find((item) => item.id === id);
+		const authorDeleted = newCourse.authors.find((el) => el.id === id);
+		const courseAuthors = newCourse.authors.filter(
+			(el) => el !== authorDeleted
+		);
 
 		setAuthorsList([...authorsList, authorDeleted]);
-		setCourseAuthor(authorAfterDelete);
+		setNewCourse({
+			...newCourse,
+			authors: courseAuthors,
+		});
 	};
 
 	const handleChange = (e) => {
@@ -143,7 +132,12 @@ const CreateCourse = ({ courseDurationDefault }) => {
 			return;
 		}
 
-		mockedCoursesList.push(newCourse);
+		const course = {
+			...newCourse,
+			authors: newCourse.authors.map((item) => item.id),
+		};
+
+		mockedCoursesList.push(course);
 
 		setIsFormShow(false);
 	};
@@ -243,8 +237,8 @@ const CreateCourse = ({ courseDurationDefault }) => {
 									</div>
 									<div className='course-info__col course-info__col--centercontent pl-25'>
 										<h3>Course authors</h3>
-										{courseAuthor.length ? (
-											courseAuthor.map((author) => (
+										{newCourse.authors.length ? (
+											newCourse.authors.map((author) => (
 												<div className='course-info__row' key={author.id}>
 													<div className='course-info__col'>{author.name}</div>
 													<div className='course-info__col course-info__col--startcontent pl-25'>
