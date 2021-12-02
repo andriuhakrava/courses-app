@@ -1,29 +1,24 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { mockedCoursesList } from '../../constants';
-
-import formatDuration from '../../helpers/pipeDuration';
 
 import { Wrapper, Content } from './Courses.style.js';
 
 import SearchBar from './components/SearchBar/SearchBar.jsx';
 import Button from '../../common/Button/Button.jsx';
 import CoursesList from './components/CoursesList/CoursesList.jsx';
-import CreateCourse from '../CreateCourse/CreateCourse.jsx';
 
 const Courses = () => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const [courses, setCourses] = useState(mockedCoursesList);
-	const [courseDuration, setCourseDuration] = useState(0);
-	const [isContentShow, setIsContentShow] = useState(true);
+
+	const navigate = useNavigate();
 
 	const showCreateCourseForm = (e) => {
 		e.preventDefault();
 
-		setIsContentShow(false);
-
-		const courseDurationFormatted = formatDuration(0);
-		setCourseDuration(courseDurationFormatted);
+		navigate(`/courses/add`);
 	};
 
 	const handleSearchChange = (e) => {
@@ -62,27 +57,23 @@ const Courses = () => {
 
 	return (
 		<div className='container'>
-			{isContentShow ? (
-				<>
-					<Wrapper>
-						<SearchBar
-							valueSearched={searchQuery}
-							handleChange={handleSearchChange}
-							handleSubmit={handleSearchSubmit}
-						/>
-						<Button
-							buttonType='button'
-							buttonText='Add new course'
-							onClick={showCreateCourseForm}
-						/>
-					</Wrapper>
-					<Content>
-						<CoursesList courses={courses} />
-					</Content>
-				</>
-			) : (
-				<CreateCourse courseDurationDefault={courseDuration} />
-			)}
+			<>
+				<Wrapper>
+					<SearchBar
+						valueSearched={searchQuery}
+						handleChange={handleSearchChange}
+						handleSubmit={handleSearchSubmit}
+					/>
+					<Button
+						buttonType='button'
+						buttonText='Add new course'
+						onClick={showCreateCourseForm}
+					/>
+				</Wrapper>
+				<Content>
+					<CoursesList courses={courses} />
+				</Content>
+			</>
 		</div>
 	);
 };
