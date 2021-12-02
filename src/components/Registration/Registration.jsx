@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import { Wrapper } from './Registration';
+import { Wrapper } from './Registration.style.js';
 import Input from '../../common/Input/Input.jsx';
 import Button from '../../common/Button/Button.jsx';
 
