@@ -57,6 +57,10 @@ export const Content = styled.div`
 		&--endcontent {
 			align-self: end;
 			justify-items: end;
+
+			button {
+				margin: 0;
+			}
 		}
 
 		&--startcontent {

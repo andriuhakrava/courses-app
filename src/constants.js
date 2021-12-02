@@ -58,4 +58,4 @@ export const mockedAuthorsList = [
 	},
 ];
 
-export const regexpNumber = /\d+/g;
+export const regexpNumber = /^\d+/g;
