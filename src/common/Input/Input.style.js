@@ -24,6 +24,7 @@ export const InputStyled = styled.div`
 
 	textarea {
 		width: 100%;
+		box-sizing: border-box;
 		padding: 8px 12px;
 		background: #d3e4cd;
 		min-height: 100px;
