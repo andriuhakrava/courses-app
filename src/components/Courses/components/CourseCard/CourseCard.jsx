@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 import formatDate from '../../../../helpers/dateGenerator';
 import formatDuration from '../../../../helpers/pipeDuration';
@@ -8,22 +9,25 @@ import { Content } from './CourseCard.style.js';
 import Button from '../../../../common/Button/Button.jsx';
 
 const CourseCard = ({ authorsMockedList, course }) => {
-	const { title, description, authors, duration, creationDate } = course;
+	const { id, title, description, authors, duration, creationDate } = course;
 
 	const [courseDuration, setCourseDuration] = useState(duration);
 	const [courseCreationDate, setCourseCreationDate] = useState(creationDate);
 	const [courseAuthors, setCourseAuthors] = useState('');
 
-	const findAuthors = (authors, authorsMockedList) => {
-		const filteredArray = [];
+	const navigate = useNavigate();
 
-		for (let i = 0; i < authorsMockedList.length; i++) {
-			for (let j = 0; j < authors.length; j++) {
-				if (authors[j] === authorsMockedList[i].id) {
-					filteredArray.push(authorsMockedList[i]);
-				}
+	const showCourseInfo = () => {
+		navigate(`/courses/${id}`);
+	};
+
+	const findAuthors = (authors, authorsMockedList) => {
+		const filteredArray = authorsMockedList.reduce((arr, item) => {
+			if (authors.includes(item.id)) {
+				arr.push(item);
 			}
-		}
+			return arr;
+		}, []);
 
 		return filteredArray;
 	};
@@ -35,9 +39,7 @@ const CourseCard = ({ authorsMockedList, course }) => {
 			authorsFormatted.push(author.name);
 		});
 
-		authorsFormatted = authorsFormatted.join(', ');
-
-		return authorsFormatted;
+		return authorsFormatted.join(', ');
 	};
 
 	useEffect(() => {
@@ -78,7 +80,11 @@ const CourseCard = ({ authorsMockedList, course }) => {
 					<h3>Created:</h3>
 					<span>{courseCreationDate}</span>
 				</div>
-				<Button buttonText='Show course' />
+				<Button
+					buttonType='button'
+					buttonText='Show course'
+					onClick={showCourseInfo}
+				/>
 			</div>
 		</Content>
 	);
