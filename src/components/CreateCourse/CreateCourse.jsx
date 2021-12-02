@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -26,7 +27,7 @@ const CreateCourse = ({ courseDurationDefault }) => {
 	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
 	const [author, setAuthor] = useState({});
 
-	const [isFormShow, setIsFormShow] = useState(true);
+	const navigate = useNavigate();
 
 	const createNewAuthor = (e) => {
 		e.preventDefault();
@@ -139,134 +140,128 @@ const CreateCourse = ({ courseDurationDefault }) => {
 
 		mockedCoursesList.push(course);
 
-		setIsFormShow(false);
+		navigate(`/courses`);
 	};
 
 	return (
-		<>
-			{isFormShow ? (
-				<Wrapper>
-					<Content>
-						<form id='createCourseForm' onSubmit={handleSubmit}>
-							<div className='course-info'>
-								<div className='course-info__row'>
-									<div className='course-info__col course-info__col--halfsize'>
-										<Input
-											inputType='text'
-											inputName='title'
-											inputPlaceholder='Enter title...'
-											labelText='Title'
-											value={newCourse.title}
-											onChange={handleChange}
-										/>
-									</div>
-									<div className='course-info__col course-info__col--endcontent'>
-										<Button type='submit' buttonText='Create Course' />
-									</div>
-								</div>
-								<div className='course-info__row course-info__row--full'>
-									<div className='course-info__col'>
-										<Input
-											inputType='textarea'
-											inputName='description'
-											inputPlaceholder='Enter description'
-											labelText='Description'
-											value={newCourse.description}
-											onChange={handleChange}
-										/>
-									</div>
-								</div>
-								<div className='course-info__row'>
-									<div className='course-info__col pr-25'>
-										<h3>Add author</h3>
-										<Input
-											inputType='text'
-											inputName='author'
-											inputPlaceholder='Enter author name...'
-											labelText='Author name'
-											value={author}
-											onChange={handleChange}
-										/>
-										<Button
-											type='submit'
-											buttonText='Create author'
-											onClick={createNewAuthor}
-										/>
-									</div>
-									<div className='course-info__col course-info__col--centercontent pl-25'>
-										<h3>Authors</h3>
-										{authorsList.length ? (
-											authorsList.map((item) => (
-												<div className='course-info__row' key={item.id}>
-													<div className='course-info__col'>{item.name}</div>
-													<div className='course-info__col'>
-														<Button
-															type='submit'
-															buttonText='Add author'
-															onClick={(e) => addCourseAuthor(e, item.id)}
-														/>
-													</div>
-												</div>
-											))
-										) : (
-											<div className='course-info__row course-info__row--full'>
-												<div className='course-info__col course-info__col--centercontent'>
-													Author list is empty
-												</div>
+		<Wrapper>
+			<Content>
+				<form id='createCourseForm' onSubmit={handleSubmit}>
+					<div className='course-info'>
+						<div className='course-info__row'>
+							<div className='course-info__col course-info__col--halfsize'>
+								<Input
+									inputType='text'
+									inputName='title'
+									inputPlaceholder='Enter title...'
+									labelText='Title'
+									value={newCourse.title}
+									onChange={handleChange}
+								/>
+							</div>
+							<div className='course-info__col course-info__col--endcontent'>
+								<Button type='submit' buttonText='Create Course' />
+							</div>
+						</div>
+						<div className='course-info__row course-info__row--full'>
+							<div className='course-info__col'>
+								<Input
+									inputType='textarea'
+									inputName='description'
+									inputPlaceholder='Enter description'
+									labelText='Description'
+									value={newCourse.description}
+									onChange={handleChange}
+								/>
+							</div>
+						</div>
+						<div className='course-info__row'>
+							<div className='course-info__col pr-25'>
+								<h3>Add author</h3>
+								<Input
+									inputType='text'
+									inputName='author'
+									inputPlaceholder='Enter author name...'
+									labelText='Author name'
+									value={author}
+									onChange={handleChange}
+								/>
+								<Button
+									type='submit'
+									buttonText='Create author'
+									onClick={createNewAuthor}
+								/>
+							</div>
+							<div className='course-info__col course-info__col--centercontent pl-25'>
+								<h3>Authors</h3>
+								{authorsList.length ? (
+									authorsList.map((item) => (
+										<div className='course-info__row' key={item.id}>
+											<div className='course-info__col'>{item.name}</div>
+											<div className='course-info__col'>
+												<Button
+													type='submit'
+													buttonText='Add author'
+													onClick={(e) => addCourseAuthor(e, item.id)}
+												/>
 											</div>
-										)}
-									</div>
-								</div>
-								<div className='course-info__row'>
-									<div className='course-info__col pr-25'>
-										<h3>Duration</h3>
-										<Input
-											inputType='number'
-											inputName='duration'
-											inputPlaceholder='Enter duration in minutes...'
-											labelText='Duration'
-											min='0'
-											value={newCourse.duration}
-											onChange={handleChange}
-										/>
-										<div className='course-info__row course-info__row--full'>
-											<p className='course-info__duration'>
-												Duration: <span>{courseDuration}</span> hours
-											</p>
+										</div>
+									))
+								) : (
+									<div className='course-info__row course-info__row--full'>
+										<div className='course-info__col course-info__col--centercontent'>
+											Author list is empty
 										</div>
 									</div>
-									<div className='course-info__col course-info__col--centercontent pl-25'>
-										<h3>Course authors</h3>
-										{newCourse.authors.length ? (
-											newCourse.authors.map((author) => (
-												<div className='course-info__row' key={author.id}>
-													<div className='course-info__col'>{author.name}</div>
-													<div className='course-info__col course-info__col--startcontent pl-25'>
-														<Button
-															type='submit'
-															buttonText='Delete author'
-															onClick={(e) => deleteCourseAuthor(e, author.id)}
-														/>
-													</div>
-												</div>
-											))
-										) : (
-											<div className='course-info__row course-info__row--full'>
-												<div className='course-info__col course-info__col--centercontent'>
-													Author list is empty
-												</div>
-											</div>
-										)}
-									</div>
+								)}
+							</div>
+						</div>
+						<div className='course-info__row'>
+							<div className='course-info__col pr-25'>
+								<h3>Duration</h3>
+								<Input
+									inputType='number'
+									inputName='duration'
+									inputPlaceholder='Enter duration in minutes...'
+									labelText='Duration'
+									min='0'
+									value={newCourse.duration}
+									onChange={handleChange}
+								/>
+								<div className='course-info__row course-info__row--full'>
+									<p className='course-info__duration'>
+										Duration: <span>{courseDuration}</span> hours
+									</p>
 								</div>
 							</div>
-						</form>
-					</Content>
-				</Wrapper>
-			) : (
-				<Courses />
-			)}
-		</>
+							<div className='course-info__col course-info__col--centercontent pl-25'>
+								<h3>Course authors</h3>
+								{newCourse.authors.length ? (
+									newCourse.authors.map((author) => (
+										<div className='course-info__row' key={author.id}>
+											<div className='course-info__col'>{author.name}</div>
+											<div className='course-info__col course-info__col--startcontent pl-25'>
+												<Button
+													type='submit'
+													buttonText='Delete author'
+													onClick={(e) => deleteCourseAuthor(e, author.id)}
+												/>
+											</div>
+										</div>
+									))
+								) : (
+									<div className='course-info__row course-info__row--full'>
+										<div className='course-info__col course-info__col--centercontent'>
+											Author list is empty
+										</div>
+									</div>
+								)}
+							</div>
+						</div>
+					</div>
+				</form>
+			</Content>
+		</Wrapper>
 	);
 };
 
