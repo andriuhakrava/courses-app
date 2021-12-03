@@ -9,23 +9,40 @@ import Button from '../../common/Button/Button.jsx';
 
 const Header = () => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [userName, setUserName] = useState('');
 	const navigate = useNavigate();
 
 	const getToken = () => {
-		if (localStorage.getItem('userToken')) {
+		const token = localStorage.getItem('userToken');
+
+		if (token) {
 			setIsAuthenticated(true);
+		}
+	};
+
+	const getUserName = () => {
+		const user = localStorage.getItem('userName');
+
+		if (user) {
+			setUserName(user);
 		}
 	};
 
 	const logOut = (e) => {
 		e.preventDefault();
+
 		localStorage.removeItem('userToken');
+		localStorage.removeItem('userName');
+
 		setIsAuthenticated(false);
+		setUserName('');
+
 		navigate('/login');
 	};
 
 	useEffect(() => {
 		getToken();
+		getUserName();
 	});
 
 	return (
@@ -37,7 +54,7 @@ const Header = () => {
 						<span>
 							{isAuthenticated && (
 								<div className='header__content'>
-									<span>Andrii</span>
+									<span>{userName}</span>
 									<form>
 										<Button
 											type='button'

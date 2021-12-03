@@ -40,8 +40,10 @@ const Login = () => {
 
 		if (response.status === 201) {
 			if (result.successful) {
-				navigate('/courses');
 				localStorage.setItem('userToken', result.result);
+				localStorage.setItem('userName', result.user.name);
+
+				navigate('/courses');
 			}
 		} else {
 			alert('Please fill in right email or password!');
