@@ -60,7 +60,6 @@ const Courses = () => {
 			<>
 				<Wrapper>
 					<SearchBar
-						valueSearched={searchQuery}
 						handleChange={handleSearchChange}
 						handleSubmit={handleSearchSubmit}
 					/>

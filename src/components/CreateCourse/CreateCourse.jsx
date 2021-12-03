@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import PropTypes from 'prop-types';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -223,7 +224,6 @@ const CreateCourse = ({ courseDurationDefault }) => {
 									inputName='duration'
 									inputPlaceholder='Enter duration in minutes...'
 									labelText='Duration'
-									min='0'
 									value={newCourse.duration}
 									onChange={handleChange}
 								/>
@@ -262,6 +262,14 @@ const CreateCourse = ({ courseDurationDefault }) => {
 			</Content>
 		</Wrapper>
 	);
+};
+
+CreateCourse.propTypes = {
+	courseDurationDefault: PropTypes.string.isRequired,
+};
+
+CreateCourse.defaultProps = {
+	courseDurationDefault: '00:00',
 };
 
 export default CreateCourse;

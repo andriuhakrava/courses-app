@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { mockedAuthorsList } from '../../../../constants';
 
@@ -14,6 +15,10 @@ const CoursesList = ({ courses }) => {
 	));
 
 	return coursesList;
+};
+
+CoursesList.propTypes = {
+	courses: PropTypes.array.isRequired,
 };
 
 export default CoursesList;

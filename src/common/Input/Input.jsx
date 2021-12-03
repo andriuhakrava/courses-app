@@ -1,11 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { InputStyled } from './Input.style.js';
 
 const Input = ({
 	inputType,
 	inputName,
-	minValue,
 	labelText,
 	inputPlaceholder,
 	onChange,
@@ -31,5 +31,13 @@ const Input = ({
 		)}
 	</InputStyled>
 );
+
+Input.propTypes = {
+	inputType: PropTypes.string.isRequired,
+	inputName: PropTypes.string.isRequired,
+	labelText: PropTypes.string,
+	inputPlaceholder: PropTypes.string.isRequired,
+	onChange: PropTypes.func,
+};
 
 export default Input;

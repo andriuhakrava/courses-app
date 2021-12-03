@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
 
 import formatDate from '../../../../helpers/dateGenerator';
@@ -88,6 +89,11 @@ const CourseCard = ({ authorsMockedList, course }) => {
 			</div>
 		</Content>
 	);
+};
+
+CourseCard.propTypes = {
+	authorsMockedList: PropTypes.array.isRequired,
+	course: PropTypes.object.isRequired,
 };
 
 export default CourseCard;
