@@ -10,7 +10,6 @@ import { Wrapper, Content } from './CreateCourse.style.js';
 
 import Input from '../../common/Input/Input.jsx';
 import Button from '../../common/Button/Button.jsx';
-import Courses from '../Courses/Courses.jsx';
 
 const CreateCourse = ({ courseDurationDefault }) => {
 	const [newCourse, setNewCourse] = useState({
