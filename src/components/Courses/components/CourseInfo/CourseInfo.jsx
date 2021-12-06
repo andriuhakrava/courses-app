@@ -46,7 +46,7 @@ const CourseInfo = () => {
 			<Content>
 				<Link to='/courses'>
 					<Button
-						type='button'
+						buttonType='button'
 						buttonText='< Back to courses'
 						onClick={backToCourses}
 					/>

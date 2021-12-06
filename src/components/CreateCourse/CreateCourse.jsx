@@ -160,7 +160,7 @@ const CreateCourse = ({ courseDurationDefault }) => {
 								/>
 							</div>
 							<div className='course-info__col course-info__col--endcontent'>
-								<Button type='submit' buttonText='Create Course' />
+								<Button buttonType='submit' buttonText='Create Course' />
 							</div>
 						</div>
 						<div className='course-info__row course-info__row--full'>
@@ -187,7 +187,7 @@ const CreateCourse = ({ courseDurationDefault }) => {
 									onChange={handleChange}
 								/>
 								<Button
-									type='submit'
+									buttonType='submit'
 									buttonText='Create author'
 									onClick={createNewAuthor}
 								/>
@@ -200,7 +200,7 @@ const CreateCourse = ({ courseDurationDefault }) => {
 											<div className='course-info__col'>{item.name}</div>
 											<div className='course-info__col'>
 												<Button
-													type='submit'
+													buttonType='submit'
 													buttonText='Add author'
 													onClick={(e) => addCourseAuthor(e, item.id)}
 												/>
@@ -241,7 +241,7 @@ const CreateCourse = ({ courseDurationDefault }) => {
 											<div className='course-info__col'>{author.name}</div>
 											<div className='course-info__col course-info__col--startcontent pl-25'>
 												<Button
-													type='submit'
+													buttonType='submit'
 													buttonText='Delete author'
 													onClick={(e) => deleteCourseAuthor(e, author.id)}
 												/>
