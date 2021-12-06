@@ -1,6 +1,11 @@
-import React, { useState, useEffect } from 'react';
-
 import { useNavigate } from 'react-router';
+
+import {
+	getToken,
+	getUserName,
+	removeToken,
+	removeUserName,
+} from '../../helpers/localStorageHandler.js';
 
 import { HeaderStyled, Content } from './Header.style.js';
 
@@ -8,42 +13,19 @@ import Logo from './components/Logo/Logo.jsx';
 import Button from '../../common/Button/Button.jsx';
 
 const Header = () => {
-	const [isAuthenticated, setIsAuthenticated] = useState(false);
-	const [userName, setUserName] = useState('');
 	const navigate = useNavigate();
 
-	const getToken = () => {
-		const token = localStorage.getItem('userToken');
-
-		if (token) {
-			setIsAuthenticated(true);
-		}
-	};
-
-	const getUserName = () => {
-		const user = localStorage.getItem('userName');
-
-		if (user) {
-			setUserName(user);
-		}
-	};
+	const token = getToken();
+	const user = getUserName();
 
 	const logOut = (e) => {
 		e.preventDefault();
 
-		localStorage.removeItem('userToken');
-		localStorage.removeItem('userName');
-
-		setIsAuthenticated(false);
-		setUserName('');
+		removeToken();
+		removeUserName();
 
 		navigate('/login');
 	};
-
-	useEffect(() => {
-		getToken();
-		getUserName();
-	});
 
 	return (
 		<HeaderStyled>
@@ -52,12 +34,12 @@ const Header = () => {
 					<Logo></Logo>
 					<div className='header__content'>
 						<span>
-							{isAuthenticated && (
+							{token && (
 								<div className='header__content'>
-									<span>{userName}</span>
+									<span>{user}</span>
 									<form>
 										<Button
-											type='button'
+											buttonType='button'
 											buttonText='Logout'
 											onClick={logOut}
 										/>
