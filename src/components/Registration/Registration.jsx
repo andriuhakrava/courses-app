@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { Wrapper } from './Registration.style.js';
+
+import Header from '../Header/Header.jsx';
 import Input from '../../common/Input/Input.jsx';
 import Button from '../../common/Button/Button.jsx';
 
@@ -49,49 +51,52 @@ const Registration = () => {
 	};
 
 	return (
-		<Wrapper>
-			<form className='user-form' onSubmit={handleSubmit}>
-				<h2 className='user-form__title'>Registration</h2>
-				<div className='user-form__row'>
-					<Input
-						inputType='text'
-						inputName='name'
-						inputPlaceholder='Enter name'
-						labelText='Name'
-						value={newUser.name}
-						onChange={handleChange}
-					/>
-				</div>
-				<div className='user-form__row'>
-					<Input
-						inputType='email'
-						inputName='email'
-						inputPlaceholder='Enter email'
-						labelText='Email'
-						value={newUser.email}
-						onChange={handleChange}
-					/>
-				</div>
-				<div className='user-form__row'>
-					<Input
-						inputType='password'
-						inputName='password'
-						inputPlaceholder='Enter password'
-						labelText='Password'
-						value={newUser.password}
-						onChange={handleChange}
-					/>
-				</div>
-				<div className='user-form__row'>
-					<Button buttonType='submit' buttonText='Registration' />
-				</div>
-				<div className='user-form__account-info'>
-					<p>
-						If you have an account you can <Link to='/login'>Login</Link>
-					</p>
-				</div>
-			</form>
-		</Wrapper>
+		<>
+			<Header />
+			<Wrapper>
+				<form className='user-form' onSubmit={handleSubmit}>
+					<h2 className='user-form__title'>Registration</h2>
+					<div className='user-form__row'>
+						<Input
+							inputType='text'
+							inputName='name'
+							inputPlaceholder='Enter name'
+							labelText='Name'
+							value={newUser.name}
+							onChange={handleChange}
+						/>
+					</div>
+					<div className='user-form__row'>
+						<Input
+							inputType='email'
+							inputName='email'
+							inputPlaceholder='Enter email'
+							labelText='Email'
+							value={newUser.email}
+							onChange={handleChange}
+						/>
+					</div>
+					<div className='user-form__row'>
+						<Input
+							inputType='password'
+							inputName='password'
+							inputPlaceholder='Enter password'
+							labelText='Password'
+							value={newUser.password}
+							onChange={handleChange}
+						/>
+					</div>
+					<div className='user-form__row'>
+						<Button buttonType='submit' buttonText='Registration' />
+					</div>
+					<div className='user-form__account-info'>
+						<p>
+							If you have an account you can <Link to='/login'>Login</Link>
+						</p>
+					</div>
+				</form>
+			</Wrapper>
+		</>
 	);
 };
 
