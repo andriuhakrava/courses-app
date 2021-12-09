@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import PropTypes from 'prop-types';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,7 +11,8 @@ import { Wrapper, Content } from './CreateCourse.style.js';
 import Input from '../../common/Input/Input.jsx';
 import Button from '../../common/Button/Button.jsx';
 
-const CreateCourse = ({ courseDurationDefault }) => {
+const CreateCourse = () => {
+	const courseDurationDefault = '00:00';
 	const [newCourse, setNewCourse] = useState({
 		id: uuidv4(),
 		title: '',
@@ -262,14 +262,6 @@ const CreateCourse = ({ courseDurationDefault }) => {
 			</Content>
 		</Wrapper>
 	);
-};
-
-CreateCourse.propTypes = {
-	courseDurationDefault: PropTypes.string.isRequired,
-};
-
-CreateCourse.defaultProps = {
-	courseDurationDefault: '00:00',
 };
 
 export default CreateCourse;
