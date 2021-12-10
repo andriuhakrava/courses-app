@@ -48,24 +48,37 @@ const CreateCourse = () => {
 		}
 
 		setAuthor(newAuthor);
+
+		console.log('NEW AUTHORS LIST STATE', [...authorsList, newAuthor]);
+
 		setAuthorsList([...authorsList, newAuthor]);
+		console.log('NEW AUTHOR', newAuthor);
+		console.log('AUTHORS LIST IN CREATE NEW AUTHOR', authorsList);
+		console.log('NEW COURSE IN CREATE NEW AUTHOR', newCourse);
 	};
 
 	const addCourseAuthor = (e, id) => {
 		e.preventDefault();
 
-		const author = authorsList.find((el) => el.id === id);
+		const authorAdded = authorsList.find((el) => el.id === id);
 		const authorsListAfterAdd = authorsList.filter(
-			(author) => author.id !== id
+			(author) => author !== authorAdded
 		);
 
+		console.log('AUTHORS LIST AFTER ADD', authorsListAfterAdd);
+
+		console.log('ADDED AUTHOR', authorAdded);
+
 		setAuthorsList(authorsListAfterAdd);
+		console.log('AUTHORS LIST', authorsList);
+
 		setNewCourse((prevState) => {
 			return {
 				...newCourse,
-				authors: [...prevState.authors, author],
+				authors: [...prevState.authors, authorAdded],
 			};
 		});
+		console.log('NEW COURSE AFTER ADDING AUTHOR', newCourse);
 	};
 
 	const deleteCourseAuthor = (e, id) => {
@@ -86,10 +99,12 @@ const CreateCourse = () => {
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 
-		setNewCourse({
-			...newCourse,
-			[name]: value,
-		});
+		if (name !== 'author') {
+			setNewCourse({
+				...newCourse,
+				[name]: value,
+			});
+		}
 
 		if (name === 'duration') {
 			if (+value < 0) return;
