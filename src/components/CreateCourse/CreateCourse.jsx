@@ -49,12 +49,7 @@ const CreateCourse = () => {
 
 		setAuthor(newAuthor);
 
-		console.log('NEW AUTHORS LIST STATE', [...authorsList, newAuthor]);
-
 		setAuthorsList([...authorsList, newAuthor]);
-		console.log('NEW AUTHOR', newAuthor);
-		console.log('AUTHORS LIST IN CREATE NEW AUTHOR', authorsList);
-		console.log('NEW COURSE IN CREATE NEW AUTHOR', newCourse);
 	};
 
 	const addCourseAuthor = (e, id) => {
@@ -65,12 +60,7 @@ const CreateCourse = () => {
 			(author) => author !== authorAdded
 		);
 
-		console.log('AUTHORS LIST AFTER ADD', authorsListAfterAdd);
-
-		console.log('ADDED AUTHOR', authorAdded);
-
 		setAuthorsList(authorsListAfterAdd);
-		console.log('AUTHORS LIST', authorsList);
 
 		setNewCourse((prevState) => {
 			return {
@@ -78,7 +68,6 @@ const CreateCourse = () => {
 				authors: [...prevState.authors, authorAdded],
 			};
 		});
-		console.log('NEW COURSE AFTER ADDING AUTHOR', newCourse);
 	};
 
 	const deleteCourseAuthor = (e, id) => {
