@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useEffect } from 'react';
 
-import { Navigate, Routes, Route } from 'react-router-dom';
+import { Navigate, Routes, Route, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 
 import { getToken } from './helpers/localStorageHandler';
@@ -17,14 +17,15 @@ import NotFoundPage from './components/NotFoundPage/NotFoundPage.jsx';
 const App = () => {
 	const token = getToken();
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	useEffect(() => {
 		const token = getToken();
 
-		if (!token) {
+		if (!token && location.pathname !== '/registration') {
 			navigate('/login');
 		}
-	}, [navigate, token]);
+	}, [navigate, location.pathname, token]);
 
 	return (
 		<>
