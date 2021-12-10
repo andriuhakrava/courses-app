@@ -92,8 +92,20 @@ const CourseCard = ({ authorsMockedList, course }) => {
 };
 
 CourseCard.propTypes = {
-	authorsMockedList: PropTypes.array.isRequired,
-	course: PropTypes.object.isRequired,
+	authorsMockedList: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string.isRequired,
+			name: PropTypes.string.isRequired,
+		})
+	).isRequired,
+	course: PropTypes.shape({
+		id: PropTypes.string.isRequired,
+		title: PropTypes.string.isRequired,
+		description: PropTypes.string.isRequired,
+		authors: PropTypes.arrayOf(PropTypes.string).isRequired,
+		duration: PropTypes.number.isRequired,
+		creationDate: PropTypes.string.isRequired,
+	}).isRequired,
 };
 
 export default CourseCard;

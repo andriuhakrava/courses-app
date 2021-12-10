@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
-import PropTypes from 'prop-types';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,7 +11,8 @@ import { Wrapper, Content } from './CreateCourse.style.js';
 import Input from '../../common/Input/Input.jsx';
 import Button from '../../common/Button/Button.jsx';
 
-const CreateCourse = ({ courseDurationDefault }) => {
+const CreateCourse = () => {
+	const courseDurationDefault = '00:00';
 	const [newCourse, setNewCourse] = useState({
 		id: uuidv4(),
 		title: '',
@@ -48,22 +48,24 @@ const CreateCourse = ({ courseDurationDefault }) => {
 		}
 
 		setAuthor(newAuthor);
+
 		setAuthorsList([...authorsList, newAuthor]);
 	};
 
 	const addCourseAuthor = (e, id) => {
 		e.preventDefault();
 
-		const author = authorsList.find((el) => el.id === id);
+		const authorAdded = authorsList.find((el) => el.id === id);
 		const authorsListAfterAdd = authorsList.filter(
-			(author) => author.id !== id
+			(author) => author !== authorAdded
 		);
 
 		setAuthorsList(authorsListAfterAdd);
+
 		setNewCourse((prevState) => {
 			return {
 				...newCourse,
-				authors: [...prevState.authors, author],
+				authors: [...prevState.authors, authorAdded],
 			};
 		});
 	};
@@ -86,10 +88,12 @@ const CreateCourse = ({ courseDurationDefault }) => {
 	const handleChange = (e) => {
 		const { name, value } = e.target;
 
-		setNewCourse({
-			...newCourse,
-			[name]: value,
-		});
+		if (name !== 'author') {
+			setNewCourse({
+				...newCourse,
+				[name]: value,
+			});
+		}
 
 		if (name === 'duration') {
 			if (+value < 0) return;
@@ -262,14 +266,6 @@ const CreateCourse = ({ courseDurationDefault }) => {
 			</Content>
 		</Wrapper>
 	);
-};
-
-CreateCourse.propTypes = {
-	courseDurationDefault: PropTypes.string.isRequired,
-};
-
-CreateCourse.defaultProps = {
-	courseDurationDefault: '00:00',
 };
 
 export default CreateCourse;

@@ -44,4 +44,17 @@ export const Content = styled.div`
 			}
 		}
 	}
+
+	.course__absent {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding-top: 50px;
+
+		p {
+			font-size: 32px;
+			margin-bottom: 26px;
+		}
+	}
 `;

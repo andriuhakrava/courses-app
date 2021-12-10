@@ -20,17 +20,19 @@ const CourseInfo = () => {
 		navigate('/courses');
 	};
 
-	const course = mockedCoursesList.filter((item) => item.id === courseId);
+	const course = mockedCoursesList.filter((item) => item.id === courseId)[0];
 
-	const { title, description, duration, creationDate, authors } = course[0];
+	let title, description, duration, creationDate, authors;
 
 	useEffect(() => {
+		if (!course) return;
 		const durationFormatted = formatDuration(duration);
 
 		setCourseDuration(durationFormatted);
-	}, [duration]);
+	}, [course, duration]);
 
 	useEffect(() => {
+		if (!course) return;
 		const courseAuthorName = mockedAuthorsList.reduce((arr, item) => {
 			if (authors.includes(item.id)) {
 				arr.push(item.name);
@@ -39,7 +41,30 @@ const CourseInfo = () => {
 		}, []);
 
 		setCourseAuthor(courseAuthorName);
-	}, [authors]);
+	}, [course, authors]);
+
+	const courseInfoAbsentMessage =
+		'Course does not exist... Please check your url.';
+	const courseInfoNotExist = (
+		<Content>
+			<div className='course__absent'>
+				<p>{courseInfoAbsentMessage}</p>
+				<Link to='/courses'>
+					<Button
+						buttonType='button'
+						buttonText='< Back to courses'
+						onClick={backToCourses}
+					/>
+				</Link>
+			</div>
+		</Content>
+	);
+
+	if (typeof course === 'object') {
+		({ title, description, duration, creationDate, authors } = course);
+	} else {
+		return courseInfoNotExist;
+	}
 
 	return (
 		<Wrapper>
@@ -51,32 +76,34 @@ const CourseInfo = () => {
 						onClick={backToCourses}
 					/>
 				</Link>
-				<h2>{title}</h2>
-				<div className='course-info'>
-					<div className='course-info__description'>{description}</div>
-					<div className='course-info__parameters'>
-						<div className='course-info__item'>
-							<h3 className='course-info__title'>ID:</h3>
-							<span>{courseId}</span>
-						</div>
-						<div className='course-info__item'>
-							<h3 className='course-info__title'>Duration:</h3>
-							<span>{courseDuration} hours</span>
-						</div>
-						<div className='course-info__item'>
-							<h3 className='course-info__title'>Created:</h3>
-							<span>{creationDate}</span>
-						</div>
-						<div className='course-info__item'>
-							<h3 className='course-info__title'>Authors:</h3>
-							<div className='course-info__authors'>
-								{courseAuthor.map((item, index) => (
-									<p key={index}>{item}</p>
-								))}
+				<>
+					<h2>{title}</h2>
+					<div className='course-info'>
+						<div className='course-info__description'>{description}</div>
+						<div className='course-info__parameters'>
+							<div className='course-info__item'>
+								<h3 className='course-info__title'>ID:</h3>
+								<span>{courseId}</span>
+							</div>
+							<div className='course-info__item'>
+								<h3 className='course-info__title'>Duration:</h3>
+								<span>{courseDuration} hours</span>
+							</div>
+							<div className='course-info__item'>
+								<h3 className='course-info__title'>Created:</h3>
+								<span>{creationDate}</span>
+							</div>
+							<div className='course-info__item'>
+								<h3 className='course-info__title'>Authors:</h3>
+								<div className='course-info__authors'>
+									{courseAuthor.map((item, index) => (
+										<p key={index}>{item}</p>
+									))}
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</>
 			</Content>
 		</Wrapper>
 	);
