@@ -13,4 +13,9 @@ export const ButtonStyled = styled.button`
 	:hover {
 		background: #adc2a9;
 	}
+
+	img {
+		width: 16px;
+		height: 16px;
+	}
 `;
