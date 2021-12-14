@@ -30,6 +30,10 @@ export const Content = styled.div`
 		align-items: start;
 		justify-content: start;
 
+		@media screen and (max-width: 600px) {
+			grid-gap: 6px;
+		}
+
 		&--full {
 			grid-template-columns: 1fr;
 		}

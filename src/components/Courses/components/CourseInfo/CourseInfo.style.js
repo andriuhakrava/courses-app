@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
 	padding: 16px 48px 36px;
+
+	@media screen and (max-width: 600px) {
+		padding: 24px;
+	}
 `;
 
 export const Content = styled.div`
@@ -21,8 +25,18 @@ export const Content = styled.div`
 		grid-template-columns: 3fr 1fr;
 		font-size: 18px;
 
+		@media screen and (max-width: 600px) {
+			display: flex;
+			flex-direction: column;
+		}
+
 		&__description {
 			padding-right: 48px;
+
+			@media screen and (max-width: 600px) {
+				padding-right: 0;
+				margin-bottom: 48px;
+			}
 		}
 
 		&__item {

@@ -10,8 +10,22 @@ export const Content = styled.div`
 	-webkit-box-shadow: 5px 8px 16px -3px rgba(10, 22, 8, 0.75);
 	-moz-box-shadow: 5px 8px 16px -3px rgba(10, 22, 8, 0.75);
 
+	@media screen and (max-width: 600px) {
+		display: flex;
+		flex-direction: column;
+	}
+
 	.course-description {
 		padding-right: 72px;
+
+		@media screen and (max-width: 768px) {
+			padding-right: 36px;
+		}
+
+		@media screen and (max-width: 600px) {
+			padding-right: 0;
+			margin-bottom: 24px;
+		}
 	}
 
 	.course-parameters > button {
@@ -31,6 +45,11 @@ export const Content = styled.div`
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+
+		@media screen and (max-width: 475px) {
+			max-width: 400px;
+			width: 100%;
+		}
 	}
 
 	h3 {
@@ -41,6 +60,11 @@ export const Content = styled.div`
 	.course-parameters__btn-row {
 		display: flex;
 		justify-content: end;
+
+		@media screen and (max-width: 475px) {
+			justify-content: center;
+			margin-top: 22px;
+		}
 
 		button {
 			margin-left: 12px;
