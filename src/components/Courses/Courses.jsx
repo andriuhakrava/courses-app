@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { mockedCoursesList } from '../../constants';
+import { getCourses } from '../../store/courses/selectors';
 
 import { Wrapper, Content } from './Courses.style.js';
 
@@ -9,9 +10,27 @@ import SearchBar from './components/SearchBar/SearchBar.jsx';
 import Button from '../../common/Button/Button.jsx';
 import CoursesList from './components/CoursesList/CoursesList.jsx';
 
+import { fetchAuthorsThunk } from '../../store/authors/actionCreators.js';
+import { fetchCoursesThunk } from '../../store/courses/actionCreators.js';
+
 const Courses = () => {
 	const [searchQuery, setSearchQuery] = useState('');
-	const [courses, setCourses] = useState(mockedCoursesList);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchAuthorsThunk());
+	}, [dispatch]);
+
+	useEffect(() => {
+		dispatch(fetchCoursesThunk());
+	}, [dispatch]);
+
+	const courses = useSelector(getCourses);
+	const [searchResults, setSearchResults] = useState(courses);
+
+	useEffect(() => {
+		setSearchResults(courses);
+	}, [courses]);
 
 	const navigate = useNavigate();
 
@@ -25,7 +44,7 @@ const Courses = () => {
 		setSearchQuery(e.target.value);
 
 		if (e.target.value === '') {
-			setCourses([...mockedCoursesList]);
+			setSearchResults(courses);
 		}
 	};
 
@@ -52,7 +71,7 @@ const Courses = () => {
 			findCourse(searchedCourseFormatted, item)
 		);
 
-		setCourses(coursesFiltered);
+		setSearchResults(coursesFiltered);
 	};
 
 	return (
@@ -70,7 +89,7 @@ const Courses = () => {
 					/>
 				</Wrapper>
 				<Content>
-					<CoursesList courses={courses} />
+					<CoursesList courses={searchResults} />
 				</Content>
 			</>
 		</div>
