@@ -3,7 +3,10 @@ import { useNavigate } from 'react-router';
 
 import { Link, useParams } from 'react-router-dom';
 
-import { mockedCoursesList, mockedAuthorsList } from '../../../../constants';
+import { useSelector } from 'react-redux';
+import { getCourses } from '../../../../store/courses/selectors.js';
+import { getAuthors } from '../../../../store/authors/selectors.js';
+
 import formatDuration from '../../../../helpers/pipeDuration.js';
 
 import { Wrapper, Content } from './CourseInfo.style.js';
@@ -20,7 +23,10 @@ const CourseInfo = () => {
 		navigate('/courses');
 	};
 
-	const course = mockedCoursesList.filter((item) => item.id === courseId)[0];
+	const coursesList = useSelector(getCourses);
+	const authorsList = useSelector(getAuthors);
+
+	const course = coursesList.filter((item) => item.id === courseId)[0];
 
 	let title, description, duration, creationDate, authors;
 
@@ -33,7 +39,7 @@ const CourseInfo = () => {
 
 	useEffect(() => {
 		if (!course) return;
-		const courseAuthorName = mockedAuthorsList.reduce((arr, item) => {
+		const courseAuthorName = authorsList.reduce((arr, item) => {
 			if (authors.includes(item.id)) {
 				arr.push(item.name);
 			}
@@ -41,7 +47,7 @@ const CourseInfo = () => {
 		}, []);
 
 		setCourseAuthor(courseAuthorName);
-	}, [course, authors]);
+	}, [authorsList, course, authors]);
 
 	const courseInfoAbsentMessage =
 		'Course does not exist... Please check your url.';

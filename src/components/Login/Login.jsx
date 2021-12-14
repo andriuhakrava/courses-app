@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 
-import {
-	getToken,
-	setToken,
-	setUserName,
-} from '../../helpers/localStorageHandler.js';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { loginUserThunk } from '../../store/user/actionCreators.js';
+import { getAuthenticatedToken } from '../../store/user/selectors.js';
+
+import { getToken } from '../../helpers/localStorageHandler.js';
 
 import { Wrapper } from './Login.style.js';
 
@@ -16,6 +17,7 @@ import Button from '../../common/Button/Button.jsx';
 const Login = () => {
 	const [user, setUser] = useState({ email: '', password: '' });
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		const token = getToken();
@@ -24,6 +26,8 @@ const Login = () => {
 			navigate('/courses');
 		}
 	});
+
+	const token = useSelector(getAuthenticatedToken);
 
 	const handleChange = (e) => {
 		const name = e.target.name;
@@ -43,26 +47,10 @@ const Login = () => {
 			return;
 		}
 
-		const response = await fetch('http://localhost:3000/login', {
-			method: 'POST',
-			body: JSON.stringify(user),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
+		dispatch(loginUserThunk(user));
 
-		const result = await response.json();
-
-		if (response.status === 201) {
-			if (result.successful) {
-				setToken(result.result);
-				setUserName(result.user.name);
-
-				navigate('/courses');
-			}
-		} else {
-			alert('Please fill in right email or password!');
-			return;
+		if (token) {
+			navigate('/courses');
 		}
 	};
 

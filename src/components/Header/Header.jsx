@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router';
+import { Link } from 'react-router-dom';
 
-import {
-	getToken,
-	getUserName,
-	removeToken,
-	removeUserName,
-} from '../../helpers/localStorageHandler.js';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getAuthenticatedToken } from '../../store/user/selectors.js';
+import { getAuthenticatedUserName } from '../../store/user/selectors.js';
+import { logOutUser } from '../../store/user/actionCreators.js';
 
 import { HeaderStyled, Content } from './Header.style.js';
 
@@ -15,14 +15,15 @@ import Button from '../../common/Button/Button.jsx';
 const Header = () => {
 	const navigate = useNavigate();
 
-	const token = getToken();
-	const user = getUserName();
+	const token = useSelector(getAuthenticatedToken);
+	const userName = useSelector(getAuthenticatedUserName);
+
+	const dispatch = useDispatch();
 
 	const logOut = (e) => {
 		e.preventDefault();
 
-		removeToken();
-		removeUserName();
+		dispatch(logOutUser());
 
 		navigate('/login');
 	};
@@ -31,12 +32,14 @@ const Header = () => {
 		<HeaderStyled>
 			<div className='container'>
 				<Content>
-					<Logo></Logo>
+					<Link to='/courses'>
+						<Logo />
+					</Link>
 					<div className='header__content'>
 						<span>
 							{token && (
 								<div className='header__content'>
-									<span>{user}</span>
+									<span>{userName}</span>
 									<form>
 										<Button
 											buttonType='button'
