@@ -1,17 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-
-import { mockedAuthorsList } from '../../../../constants';
 
 import CourseCard from '../CourseCard/CourseCard.jsx';
 
 const CoursesList = ({ courses }) => {
 	const coursesList = courses.map((course) => (
-		<CourseCard
-			key={course.id}
-			authorsMockedList={mockedAuthorsList}
-			course={course}
-		/>
+		<CourseCard key={course.id} course={course} />
 	));
 
 	return coursesList;
