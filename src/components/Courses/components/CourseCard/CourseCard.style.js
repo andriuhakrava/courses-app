@@ -37,4 +37,13 @@ export const Content = styled.div`
 		display: inline-block;
 		margin-right: 6px;
 	}
+
+	.course-parameters__btn-row {
+		display: flex;
+		justify-content: end;
+
+		button {
+			margin-left: 12px;
+		}
+	}
 `;

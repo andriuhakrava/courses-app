@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getAuthors } from '../../../../store/authors/selectors.js';
 
 import formatDate from '../../../../helpers/dateGenerator';
 import formatDuration from '../../../../helpers/pipeDuration';
 
+import { courseDeleted } from '../../../../store/courses/actionCreators.js';
+
 import { Content } from './CourseCard.style.js';
+import iconEdit from '../../../../assets/icon-edit.png';
+import iconDelete from '../../../../assets/icon-delete.png';
 
 import Button from '../../../../common/Button/Button.jsx';
 
-const CourseCard = ({ authorsMockedList, course }) => {
+const CourseCard = ({ course }) => {
 	const { id, title, description, authors, duration, creationDate } = course;
-
 	const [courseDuration, setCourseDuration] = useState(duration);
 	const [courseCreationDate, setCourseCreationDate] = useState(creationDate);
 	const [courseAuthors, setCourseAuthors] = useState('');
+
+	const dispatch = useDispatch();
+	const authorsList = useSelector(getAuthors);
 
 	const navigate = useNavigate();
 
@@ -22,8 +31,8 @@ const CourseCard = ({ authorsMockedList, course }) => {
 		navigate(`/courses/${id}`);
 	};
 
-	const findAuthors = (authors, authorsMockedList) => {
-		const filteredArray = authorsMockedList.reduce((arr, item) => {
+	const findAuthors = (authors, authorsList) => {
+		const filteredArray = authorsList.reduce((arr, item) => {
 			if (authors.includes(item.id)) {
 				arr.push(item);
 			}
@@ -43,12 +52,20 @@ const CourseCard = ({ authorsMockedList, course }) => {
 		return authorsFormatted.join(', ');
 	};
 
+	const editCourse = () => {
+		return true;
+	};
+
+	const deleteCourse = () => {
+		dispatch(courseDeleted(id));
+	};
+
 	useEffect(() => {
-		const courseCardAuthors = findAuthors(authors, authorsMockedList);
+		const courseCardAuthors = findAuthors(authors, authorsList);
 		const courseCardAuthorsFormatted = formatAuthors(courseCardAuthors);
 
 		setCourseAuthors(courseCardAuthorsFormatted);
-	}, [authors, authorsMockedList]);
+	}, [authors, authorsList]);
 
 	useEffect(() => {
 		const durationFormatted = formatDuration(duration);
@@ -81,23 +98,33 @@ const CourseCard = ({ authorsMockedList, course }) => {
 					<h3>Created:</h3>
 					<span>{courseCreationDate}</span>
 				</div>
-				<Button
-					buttonType='button'
-					buttonText='Show course'
-					onClick={showCourseInfo}
-				/>
+				<div className='course-parameters__btn-row'>
+					<Button
+						buttonType='button'
+						buttonText='Show course'
+						onClick={showCourseInfo}
+					/>
+					<Button
+						buttonType='button'
+						buttonText=''
+						buttonImage={iconEdit}
+						buttonImageText='icon-edit'
+						onClick={editCourse}
+					/>
+					<Button
+						buttonType='button'
+						buttonText=''
+						buttonImage={iconDelete}
+						buttonImageText='icon-delete'
+						onClick={deleteCourse}
+					/>
+				</div>
 			</div>
 		</Content>
 	);
 };
 
 CourseCard.propTypes = {
-	authorsMockedList: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string.isRequired,
-			name: PropTypes.string.isRequired,
-		})
-	).isRequired,
 	course: PropTypes.shape({
 		id: PropTypes.string.isRequired,
 		title: PropTypes.string.isRequired,
