@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { v4 as uuidv4 } from 'uuid';
 
 import formatDuration from '../../helpers/pipeDuration';
-import { mockedCoursesList, mockedAuthorsList } from '../../constants';
+
+import { getAuthors } from '../../store/authors/selectors.js';
+import { addNewAuthor } from '../../store/authors/actionCreators.js';
+import { courseSaved } from '../../store/courses/actionCreators';
 
 import { Wrapper, Content } from './CreateCourse.style.js';
 
@@ -24,43 +28,48 @@ const CreateCourse = () => {
 
 	const [courseDuration, setCourseDuration] = useState(courseDurationDefault);
 
-	const [authorsList, setAuthorsList] = useState(mockedAuthorsList);
-	const [author, setAuthor] = useState({});
+	const [authorNew, setAuthorNew] = useState({});
+
+	const authorsList = useSelector(getAuthors);
+	const dispatch = useDispatch();
+
+	const [authorsRenderList, setAuthorsRenderList] = useState(authorsList);
+	const [courseAuthorsRenderList, setCourseAuthorsRenderList] = useState([]);
 
 	const navigate = useNavigate();
 
 	const createNewAuthor = (e) => {
 		e.preventDefault();
 
-		const newAuthor = {
+		const data = {
 			id: uuidv4(),
-			name: author,
+			name: authorNew,
 		};
 
-		if (typeof newAuthor.name !== 'string') {
+		if (typeof data.name !== 'string') {
 			alert('Please fill in author name field!');
 			return;
 		}
 
-		if (newAuthor.name.length < 3) {
+		if (data.name.length < 3) {
 			alert('Author field length should be more than 2 characters!');
 			return;
 		}
 
-		setAuthor(newAuthor);
-
-		setAuthorsList([...authorsList, newAuthor]);
+		dispatch(addNewAuthor(data));
+		setAuthorsRenderList([...authorsRenderList, data]);
 	};
 
 	const addCourseAuthor = (e, id) => {
 		e.preventDefault();
 
-		const authorAdded = authorsList.find((el) => el.id === id);
-		const authorsListAfterAdd = authorsList.filter(
+		const authorAdded = authorsRenderList.find((el) => el.id === id);
+		const authorsListAfterAdd = authorsRenderList.filter(
 			(author) => author !== authorAdded
 		);
 
-		setAuthorsList(authorsListAfterAdd);
+		setAuthorsRenderList(authorsListAfterAdd);
+		setCourseAuthorsRenderList([...courseAuthorsRenderList, authorAdded]);
 
 		setNewCourse((prevState) => {
 			return {
@@ -78,10 +87,18 @@ const CreateCourse = () => {
 			(el) => el !== authorDeleted
 		);
 
-		setAuthorsList([...authorsList, authorDeleted]);
-		setNewCourse({
-			...newCourse,
-			authors: courseAuthors,
+		const renderAfterDelete = courseAuthorsRenderList.filter(
+			(el) => el !== authorDeleted
+		);
+
+		setAuthorsRenderList([...authorsRenderList, authorDeleted]);
+		setCourseAuthorsRenderList([...renderAfterDelete]);
+
+		setNewCourse((prevState) => {
+			return {
+				...newCourse,
+				authors: [...prevState.authors, courseAuthors],
+			};
 		});
 	};
 
@@ -108,7 +125,7 @@ const CreateCourse = () => {
 		}
 
 		if (name === 'author') {
-			setAuthor(value);
+			setAuthorNew(value);
 		}
 	};
 
@@ -142,7 +159,8 @@ const CreateCourse = () => {
 			authors: newCourse.authors.map((item) => item.id),
 		};
 
-		mockedCoursesList.push(course);
+		dispatch(courseSaved(course));
+		console.log('NEW COURSE', newCourse);
 
 		navigate(`/courses`);
 	};
@@ -187,7 +205,7 @@ const CreateCourse = () => {
 									inputName='author'
 									inputPlaceholder='Enter author name...'
 									labelText='Author name'
-									value={author}
+									value={authorNew}
 									onChange={handleChange}
 								/>
 								<Button
@@ -198,8 +216,8 @@ const CreateCourse = () => {
 							</div>
 							<div className='course-info__col course-info__col--centercontent pl-25'>
 								<h3>Authors</h3>
-								{authorsList.length ? (
-									authorsList.map((item) => (
+								{authorsRenderList.length ? (
+									authorsRenderList.map((item) => (
 										<div className='course-info__row' key={item.id}>
 											<div className='course-info__col'>{item.name}</div>
 											<div className='course-info__col'>
@@ -239,8 +257,8 @@ const CreateCourse = () => {
 							</div>
 							<div className='course-info__col course-info__col--centercontent pl-25'>
 								<h3>Course authors</h3>
-								{newCourse.authors.length ? (
-									newCourse.authors.map((author) => (
+								{courseAuthorsRenderList.length ? (
+									courseAuthorsRenderList.map((author) => (
 										<div className='course-info__row' key={author.id}>
 											<div className='course-info__col'>{author.name}</div>
 											<div className='course-info__col course-info__col--startcontent pl-25'>
