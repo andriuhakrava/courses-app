@@ -13,6 +13,7 @@ import Login from './components/Login/Login.jsx';
 import CourseForm from './components/CourseForm/CourseForm.jsx';
 import CourseInfo from './components/Courses/components/CourseInfo/CourseInfo.jsx';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage.jsx';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 const App = () => {
 	const token = getToken();
@@ -40,7 +41,7 @@ const App = () => {
 				<Route path='courses' element={token ? <Courses /> : <Login />} />
 				<Route
 					path='courses/add'
-					element={token ? <CourseForm /> : <Login />}
+					element={<PrivateRoute component={CourseForm} />}
 				/>
 				<Route
 					path='courses/:courseId'
