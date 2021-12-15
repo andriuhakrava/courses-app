@@ -1,10 +1,10 @@
 import { LOGIN_USER, LOGOUT_USER } from './actionTypes.js';
 
 const userInitialState = {
-	isAuth: localStorage.getItem('userToken') ? true : false,
-	name: localStorage.getItem('userName') || '',
+	isAuth: false,
+	name: '',
 	email: '',
-	token: localStorage.getItem('userToken') || '',
+	token: '',
 };
 
 export default function userReducer(state = userInitialState, action) {
