@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER } from './actionTypes.js';
+import { LOGIN_USER, LOGOUT_USER, SET_USER_ROLE } from './actionTypes.js';
 
 const userInitialState = {
 	isAuth: false,
@@ -10,6 +10,12 @@ const userInitialState = {
 
 export default function userReducer(state = userInitialState, action) {
 	switch (action.type) {
+		case SET_USER_ROLE: {
+			return {
+				...state,
+				role: action.payload,
+			};
+		}
 		case LOGIN_USER: {
 			return {
 				...state,
