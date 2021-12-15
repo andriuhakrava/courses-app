@@ -6,8 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
 	getAuthenticatedUserName,
 	getAuthenticatedToken,
-	getRoleAdmin,
 } from '../../store/user/selectors.js';
+
 import { logOutUser } from '../../store/user/actionCreators.js';
 
 import { HeaderStyled, Content } from './Header.style.js';
@@ -19,10 +19,7 @@ const Header = () => {
 	const navigate = useNavigate();
 
 	const token = useSelector(getAuthenticatedToken);
-	const isRoleAdmin = useSelector(getRoleAdmin);
 	let userName = useSelector(getAuthenticatedUserName);
-
-	if (!userName && isRoleAdmin) userName = 'ADMIN';
 
 	const dispatch = useDispatch();
 
