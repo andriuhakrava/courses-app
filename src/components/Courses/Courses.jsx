@@ -19,11 +19,9 @@ const Courses = () => {
 
 	useEffect(() => {
 		dispatch(fetchAuthorsThunk());
-	}, [dispatch]);
-
-	useEffect(() => {
 		dispatch(fetchCoursesThunk());
-	}, [dispatch]);
+		// eslint-disable-next-line
+	}, []);
 
 	const courses = useSelector(getCourses);
 	const [searchResults, setSearchResults] = useState(courses);
