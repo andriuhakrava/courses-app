@@ -10,8 +10,8 @@ import SearchBar from './components/SearchBar/SearchBar.jsx';
 import Button from '../../common/Button/Button.jsx';
 import CoursesList from './components/CoursesList/CoursesList.jsx';
 
-import { fetchAuthorsThunk } from '../../store/authors/actionCreators.js';
-import { fetchCoursesThunk } from '../../store/courses/actionCreators.js';
+import { fetchAuthorsThunk } from '../../store/authors/thunk.js';
+import { fetchCoursesThunk } from '../../store/courses/thunk.js';
 
 const Courses = () => {
 	const [searchQuery, setSearchQuery] = useState('');
