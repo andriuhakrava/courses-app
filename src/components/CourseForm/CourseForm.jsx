@@ -10,12 +10,12 @@ import { getAuthors } from '../../store/authors/selectors.js';
 import { addNewAuthor } from '../../store/authors/actionCreators.js';
 import { courseSaved } from '../../store/courses/actionCreators';
 
-import { Wrapper, Content } from './CreateCourse.style.js';
+import { Wrapper, Content } from './CourseForm.style.js';
 
 import Input from '../../common/Input/Input.jsx';
 import Button from '../../common/Button/Button.jsx';
 
-const CreateCourse = () => {
+const CourseForm = () => {
 	const courseDurationDefault = '00:00';
 	const [newCourse, setNewCourse] = useState({
 		id: uuidv4(),
@@ -286,4 +286,4 @@ const CreateCourse = () => {
 	);
 };
 
-export default CreateCourse;
+export default CourseForm;

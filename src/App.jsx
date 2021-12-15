@@ -10,7 +10,7 @@ import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses.jsx';
 import Registration from './components/Registration/Registration.jsx';
 import Login from './components/Login/Login.jsx';
-import CreateCourse from './components/CreateCourse/CreateCourse.jsx';
+import CourseForm from './components/CourseForm/CourseForm.jsx';
 import CourseInfo from './components/Courses/components/CourseInfo/CourseInfo.jsx';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage.jsx';
 
@@ -40,7 +40,7 @@ const App = () => {
 				<Route path='courses' element={token ? <Courses /> : <Login />} />
 				<Route
 					path='courses/add'
-					element={token ? <CreateCourse /> : <Login />}
+					element={token ? <CourseForm /> : <Login />}
 				/>
 				<Route
 					path='courses/:courseId'
