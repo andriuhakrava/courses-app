@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getAuthors } from '../../../../store/authors/selectors.js';
+import { getRoleAdmin } from '../../../../store/user/selectors.js';
 
 import formatDate from '../../../../helpers/dateGenerator';
 import formatDuration from '../../../../helpers/pipeDuration';
@@ -24,6 +25,7 @@ const CourseCard = ({ course }) => {
 
 	const dispatch = useDispatch();
 	const authorsList = useSelector(getAuthors);
+	const isRoleAdmin = useSelector(getRoleAdmin);
 
 	const navigate = useNavigate();
 
@@ -79,6 +81,10 @@ const CourseCard = ({ course }) => {
 		setCourseCreationDate(dateFormatted);
 	}, [creationDate]);
 
+	// useEffect(() => {
+	// 	if (userRole === ROLE.ADMIN)
+	// });
+
 	return (
 		<Content>
 			<div className='course-description'>
@@ -111,13 +117,15 @@ const CourseCard = ({ course }) => {
 						buttonImageText='icon-edit'
 						onClick={editCourse}
 					/>
-					<Button
-						buttonType='button'
-						buttonText=''
-						buttonImage={iconDelete}
-						buttonImageText='icon-delete'
-						onClick={deleteCourse}
-					/>
+					{isRoleAdmin && (
+						<Button
+							buttonType='button'
+							buttonText=''
+							buttonImage={iconDelete}
+							buttonImageText='icon-delete'
+							onClick={deleteCourse}
+						/>
+					)}
 				</div>
 			</div>
 		</Content>
