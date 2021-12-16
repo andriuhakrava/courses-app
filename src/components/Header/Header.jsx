@@ -8,7 +8,7 @@ import {
 	getAuthenticatedToken,
 } from '../../store/user/selectors.js';
 
-import { logOutUser } from '../../store/user/actionCreators.js';
+import { logOutUserThunk } from '../../store/user/thunk.js';
 
 import { HeaderStyled, Content } from './Header.style.js';
 
@@ -26,7 +26,7 @@ const Header = () => {
 	const logOut = (e) => {
 		e.preventDefault();
 
-		dispatch(logOutUser());
+		dispatch(logOutUserThunk());
 
 		navigate('/login');
 	};
