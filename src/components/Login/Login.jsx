@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { loginUserThunk } from '../../store/user/thunk.js';
+import { logInUserThunk } from '../../store/user/thunk.js';
 import { getAuthenticatedToken } from '../../store/user/selectors.js';
 
 import { getToken } from '../../helpers/localStorageHandler.js';
@@ -47,7 +47,7 @@ const Login = () => {
 			return;
 		}
 
-		dispatch(loginUserThunk(user));
+		dispatch(logInUserThunk(user));
 
 		if (token) {
 			navigate('/courses');
