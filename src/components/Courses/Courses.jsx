@@ -12,12 +12,14 @@ import CoursesList from './components/CoursesList/CoursesList.jsx';
 
 import { fetchAuthorsThunk } from '../../store/authors/thunk.js';
 import { fetchCoursesThunk } from '../../store/courses/thunk.js';
+import { fetchCurrentUserThunk } from '../../store/user/thunk.js';
 
 const Courses = () => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		dispatch(fetchCurrentUserThunk());
 		dispatch(fetchAuthorsThunk());
 		dispatch(fetchCoursesThunk());
 		// eslint-disable-next-line
