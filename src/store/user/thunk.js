@@ -1,21 +1,49 @@
-import { setToken, setUserName } from '../../helpers/localStorageHandler.js';
-import { logIn } from '../../services.js';
-import { logInUser, setUserRole } from './actionCreators';
-import { ROLE } from './roles.js';
+import {
+	setToken,
+	setUserName,
+	removeToken,
+	removeUserName,
+} from '../../helpers/localStorageHandler.js';
 
-export const loginUserThunk = (user) => async (dispatch) => {
+import { logIn, logOut, fetchCurrentUser } from '../../services.js';
+
+import { logInUser, logOutUser, authenticateUser } from './actionCreators';
+
+export const logInUserThunk = (user) => async (dispatch) => {
 	const result = await logIn(user);
 
-	if (result.user.email === 'admin@email.com') {
-		dispatch(setUserRole(ROLE.ADMIN));
-	} else {
-		dispatch(setUserRole(''));
-	}
+	if (!result) return;
+
+	let name = result.user.name;
+	const token = result.token;
 
 	if (result) {
-		setToken(result.token);
-		setUserName(result.user.name);
+		setToken(token);
+		setUserName(name);
 
 		dispatch(logInUser(result));
+	}
+};
+
+export const logOutUserThunk = () => async (dispatch) => {
+	const result = await logOut();
+
+	if (!result) return;
+
+	if (result) {
+		removeToken();
+		removeUserName();
+
+		dispatch(logOutUser());
+	}
+};
+
+export const fetchCurrentUserThunk = () => async (dispatch) => {
+	const result = await fetchCurrentUser();
+
+	if (!result) return;
+
+	if (result) {
+		dispatch(authenticateUser(result));
 	}
 };
