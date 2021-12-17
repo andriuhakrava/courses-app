@@ -1,4 +1,4 @@
-import { FETCH_AUTHORS, SAVE_AUTHOR } from './actionTypes.js';
+import { FETCH_AUTHORS, ADD_AUTHOR } from './actionTypes.js';
 
 const authorsInitialState = [];
 
@@ -7,7 +7,7 @@ export default function authorsReducer(state = authorsInitialState, action) {
 		case FETCH_AUTHORS: {
 			return [...action.payload];
 		}
-		case SAVE_AUTHOR: {
+		case ADD_AUTHOR: {
 			return [...state, action.payload];
 		}
 		default:
