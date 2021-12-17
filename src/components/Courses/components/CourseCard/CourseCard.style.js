@@ -10,7 +10,7 @@ export const Content = styled.div`
 	-webkit-box-shadow: 5px 8px 16px -3px rgba(10, 22, 8, 0.75);
 	-moz-box-shadow: 5px 8px 16px -3px rgba(10, 22, 8, 0.75);
 
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 725px) {
 		display: flex;
 		flex-direction: column;
 	}
