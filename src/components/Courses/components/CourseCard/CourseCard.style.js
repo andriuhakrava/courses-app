@@ -46,9 +46,10 @@ export const Content = styled.div`
 		overflow: hidden;
 		text-overflow: ellipsis;
 
-		@media screen and (max-width: 475px) {
+		@media screen and (max-width: 500px) {
 			max-width: 400px;
 			width: 100%;
+			white-space: normal;
 		}
 	}
 
