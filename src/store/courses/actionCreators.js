@@ -1,8 +1,18 @@
-import { FETCH_COURSES, DELETE_COURSE, SAVE_COURSE } from './actionTypes';
+import {
+	FETCH_COURSES,
+	EDIT_COURSE,
+	DELETE_COURSE,
+	ADD_COURSE,
+} from './actionTypes';
 
 export const coursesLoaded = (data) => ({
 	type: FETCH_COURSES,
 	payload: data,
+});
+
+export const courseEdited = (course) => ({
+	type: EDIT_COURSE,
+	payload: course,
 });
 
 export const courseDeleted = (courseId) => ({
@@ -10,7 +20,7 @@ export const courseDeleted = (courseId) => ({
 	payload: courseId,
 });
 
-export const courseSaved = (course) => ({
-	type: SAVE_COURSE,
+export const courseAdded = (course) => ({
+	type: ADD_COURSE,
 	payload: course,
 });
