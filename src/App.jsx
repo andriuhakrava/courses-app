@@ -47,6 +47,10 @@ const App = () => {
 					path='courses/:courseId'
 					element={token ? <CourseInfo /> : <Login />}
 				/>
+				<Route
+					path='courses/update/:courseId'
+					element={<PrivateRoute component={CourseForm} />}
+				/>
 				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
 		</>
