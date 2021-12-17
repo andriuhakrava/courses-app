@@ -1,3 +1,3 @@
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
-export const SET_USER_ROLE = 'SET_USER_ROLE';
+export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
