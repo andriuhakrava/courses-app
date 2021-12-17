@@ -6,10 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAuthors } from '../../../../store/authors/selectors.js';
 import { getRoleAdmin } from '../../../../store/user/selectors.js';
 
-import formatDate from '../../../../helpers/dateGenerator';
 import formatDuration from '../../../../helpers/pipeDuration';
 
-import { courseDeleted } from '../../../../store/courses/actionCreators.js';
+import { deleteCourseThunk } from '../../../../store/courses/thunk.js';
 
 import { Content } from './CourseCard.style.js';
 import iconEdit from '../../../../assets/icon-edit.png';
@@ -20,7 +19,6 @@ import Button from '../../../../common/Button/Button.jsx';
 const CourseCard = ({ course }) => {
 	const { id, title, description, authors, duration, creationDate } = course;
 	const [courseDuration, setCourseDuration] = useState(duration);
-	const [courseCreationDate, setCourseCreationDate] = useState(creationDate);
 	const [courseAuthors, setCourseAuthors] = useState('');
 
 	const dispatch = useDispatch();
@@ -54,12 +52,12 @@ const CourseCard = ({ course }) => {
 		return authorsFormatted.join(', ');
 	};
 
-	const editCourse = () => {
-		return true;
+	const goToEditCourseForm = () => {
+		navigate(`/courses/update/${course.id}`);
 	};
 
 	const deleteCourse = () => {
-		dispatch(courseDeleted(id));
+		dispatch(deleteCourseThunk(course.id));
 	};
 
 	useEffect(() => {
@@ -74,16 +72,6 @@ const CourseCard = ({ course }) => {
 
 		setCourseDuration(durationFormatted);
 	}, [duration]);
-
-	useEffect(() => {
-		const dateFormatted = formatDate(creationDate);
-
-		setCourseCreationDate(dateFormatted);
-	}, [creationDate]);
-
-	// useEffect(() => {
-	// 	if (userRole === ROLE.ADMIN)
-	// });
 
 	return (
 		<Content>
@@ -102,7 +90,7 @@ const CourseCard = ({ course }) => {
 				</div>
 				<div className='course-parameters__item'>
 					<h3>Created:</h3>
-					<span>{courseCreationDate}</span>
+					<span>{creationDate}</span>
 				</div>
 				<div className='course-parameters__btn-row'>
 					<Button
@@ -110,21 +98,23 @@ const CourseCard = ({ course }) => {
 						buttonText='Show course'
 						onClick={showCourseInfo}
 					/>
-					<Button
-						buttonType='button'
-						buttonText=''
-						buttonImage={iconEdit}
-						buttonImageText='icon-edit'
-						onClick={editCourse}
-					/>
 					{isRoleAdmin && (
-						<Button
-							buttonType='button'
-							buttonText=''
-							buttonImage={iconDelete}
-							buttonImageText='icon-delete'
-							onClick={deleteCourse}
-						/>
+						<>
+							<Button
+								buttonType='button'
+								buttonText=''
+								buttonImage={iconEdit}
+								buttonImageText='icon-edit'
+								onClick={goToEditCourseForm}
+							/>
+							<Button
+								buttonType='button'
+								buttonText=''
+								buttonImage={iconDelete}
+								buttonImageText='icon-delete'
+								onClick={deleteCourse}
+							/>
+						</>
 					)}
 				</div>
 			</div>
