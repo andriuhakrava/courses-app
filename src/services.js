@@ -4,23 +4,19 @@ import { getToken } from './helpers/localStorageHandler.js';
 const BASE_URL = 'http://localhost:3000';
 
 export const fetchCourses = async () => {
-	try {
-		const response = await axios.get(`${BASE_URL}/courses/all`);
+	const response = await axios.get(`${BASE_URL}/courses/all`);
 
-		return response.data.result;
-	} catch (error) {
-		console.error(error);
-	}
+	if (!response) return;
+
+	return response.data.result;
 };
 
 export const fetchAuthors = async () => {
-	try {
-		const response = await axios.get(`${BASE_URL}/authors/all`);
+	const response = await axios.get(`${BASE_URL}/authors/all`);
 
-		return response.data.result;
-	} catch (error) {
-		console.error(error);
-	}
+	if (!response) return;
+
+	return response.data.result;
 };
 
 export const logIn = async (user) => {
@@ -32,6 +28,8 @@ export const logIn = async (user) => {
 				'Content-Type': 'application/json',
 			},
 		});
+
+		if (!response) return;
 
 		const data = await response.json();
 
@@ -88,20 +86,87 @@ export const fetchCurrentUser = async () => {
 	}
 };
 
-// export const deleteCourse = async (id) => {
-// 	const token = getToken();
+export const addCourse = async (course) => {
+	const token = getToken();
 
-// 	try {
-// 		const response = await fetch(`${BASE_URL}/courses/${id}`, {
-// 			method: 'DELETE',
-// 			headers: {
-// 				'Content-Type': 'application/json',
-// 				// eslint-disable-next-line
-// 				'Authorization': token,
-// 			},
-// 		});
-// 		// if (response.status === 200) return true;
-// 	} catch (error) {
-// 		console.error(error);
-// 	}
-// };
+	try {
+		const response = await fetch(`${BASE_URL}/courses/add`, {
+			method: 'POST',
+			body: JSON.stringify(course),
+			headers: {
+				'Content-Type': 'application/json',
+				// eslint-disable-next-line
+				'Authorization': token,
+			},
+		});
+
+		const data = await response.json();
+
+		return data.result;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const deleteCourse = async (id) => {
+	const token = getToken();
+
+	try {
+		const response = await fetch(`${BASE_URL}/courses/${id}`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				// eslint-disable-next-line
+				'Authorization': token,
+			},
+		});
+		if (response.status === 200) return true;
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const editCourse = async (course) => {
+	const token = getToken();
+
+	try {
+		const response = await fetch(`${BASE_URL}/courses/${course.id}`, {
+			method: 'PUT',
+			body: JSON.stringify(course),
+			headers: {
+				'Content-Type': 'application/json',
+				// eslint-disable-next-line
+				'Authorization': token,
+			},
+		});
+		console.log('EDIT RESPONSE FROM SERVICE', response);
+
+		const data = await response.json();
+
+		console.log('EDIT DATA IN SERVICE', data);
+	} catch (error) {
+		console.error(error);
+	}
+};
+
+export const saveNewAuthor = async (author) => {
+	const token = getToken();
+
+	try {
+		const response = await fetch(`${BASE_URL}/authors/add`, {
+			method: 'POST',
+			body: JSON.stringify(author),
+			headers: {
+				'Content-Type': 'application/json',
+				// eslint-disable-next-line
+				'Authorization': token,
+			},
+		});
+
+		const data = await response.json();
+
+		return data.result;
+	} catch (error) {
+		console.error(error);
+	}
+};
