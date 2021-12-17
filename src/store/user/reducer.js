@@ -1,4 +1,4 @@
-import { LOGIN_USER, LOGOUT_USER, SET_USER_ROLE } from './actionTypes.js';
+import { LOGIN_USER, LOGOUT_USER, AUTHENTICATE_USER } from './actionTypes.js';
 
 const userInitialState = {
 	isAuth: false,
@@ -10,19 +10,26 @@ const userInitialState = {
 
 export default function userReducer(state = userInitialState, action) {
 	switch (action.type) {
-		case SET_USER_ROLE: {
-			return {
-				...state,
-				role: action.payload,
-			};
-		}
-		case LOGIN_USER: {
+		case AUTHENTICATE_USER: {
+			const { name, email, role, token } = action.payload;
 			return {
 				...state,
 				isAuth: true,
-				name: action.payload.user.name,
-				email: action.payload.user.email,
-				token: action.payload.token,
+				name,
+				email,
+				role,
+				token,
+			};
+		}
+		case LOGIN_USER: {
+			const { name, email } = action.payload.user;
+			const { token } = action.payload;
+			return {
+				...state,
+				isAuth: true,
+				name,
+				email,
+				token,
 			};
 		}
 		case LOGOUT_USER: {
@@ -32,6 +39,7 @@ export default function userReducer(state = userInitialState, action) {
 				name: '',
 				email: '',
 				token: '',
+				role: '',
 			};
 		}
 		default:
