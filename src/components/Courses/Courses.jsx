@@ -26,10 +26,10 @@ const Courses = () => {
 	}, []);
 
 	const courses = useSelector(getCourses);
-	const [searchResults, setSearchResults] = useState(courses);
+	const [coursesRenderList, setCoursesRenderList] = useState(courses);
 
 	useEffect(() => {
-		setSearchResults(courses);
+		setCoursesRenderList(courses);
 	}, [courses]);
 
 	const navigate = useNavigate();
@@ -44,7 +44,7 @@ const Courses = () => {
 		setSearchQuery(e.target.value);
 
 		if (e.target.value === '') {
-			setSearchResults(courses);
+			setCoursesRenderList(courses);
 		}
 	};
 
@@ -67,11 +67,11 @@ const Courses = () => {
 
 		const searchedCourseFormatted = searchQuery.toLowerCase();
 
-		const coursesFiltered = courses.filter((item) =>
+		const coursesFiltered = coursesRenderList.filter((item) =>
 			findCourse(searchedCourseFormatted, item)
 		);
 
-		setSearchResults(coursesFiltered);
+		setCoursesRenderList(coursesFiltered);
 	};
 
 	return (
@@ -89,7 +89,7 @@ const Courses = () => {
 					/>
 				</Wrapper>
 				<Content>
-					<CoursesList courses={searchResults} />
+					<CoursesList courses={coursesRenderList} />
 				</Content>
 			</>
 		</div>
