@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-
-import { v4 as uuidv4 } from 'uuid';
 
 import formatDuration from '../../helpers/pipeDuration';
 
 import { getAuthors } from '../../store/authors/selectors.js';
-import { addNewAuthor } from '../../store/authors/actionCreators.js';
-import { courseSaved } from '../../store/courses/actionCreators';
+import { getCourseById } from '../../store/courses/selectors.js';
+
+import { addCourseThunk, editCourseThunk } from '../../store/courses/thunk';
+import { addAuthorThunk } from '../../store/authors/thunk';
 
 import { Wrapper, Content } from './CourseForm.style.js';
 
@@ -17,8 +18,13 @@ import Button from '../../common/Button/Button.jsx';
 
 const CourseForm = () => {
 	const courseDurationDefault = '00:00';
+	const { courseId } = useParams();
+
+	const coursePrefilled = useSelector((state) =>
+		getCourseById(state, courseId)
+	);
+
 	const [newCourse, setNewCourse] = useState({
-		id: uuidv4(),
 		title: '',
 		description: '',
 		creationDate: Date.parse(new Date()),
@@ -26,9 +32,25 @@ const CourseForm = () => {
 		authors: [],
 	});
 
+	useEffect(() => {
+		console.log('COURSE PREFILLED!', coursePrefilled);
+		if (coursePrefilled) {
+			setNewCourse({
+				title: coursePrefilled.title,
+				description: coursePrefilled.description,
+				creationDate: coursePrefilled.creationDate,
+				duration: coursePrefilled.duration,
+				authors: coursePrefilled.authors,
+			});
+		}
+		// eslint-disable-next-line
+	}, []);
+
+	console.log('NEW COURSE PREFILLED', newCourse);
+
 	const [courseDuration, setCourseDuration] = useState(courseDurationDefault);
 
-	const [authorNew, setAuthorNew] = useState({});
+	const [authorNew, setAuthorNew] = useState('');
 
 	const authorsList = useSelector(getAuthors);
 	const dispatch = useDispatch();
@@ -42,7 +64,6 @@ const CourseForm = () => {
 		e.preventDefault();
 
 		const data = {
-			id: uuidv4(),
 			name: authorNew,
 		};
 
@@ -56,7 +77,7 @@ const CourseForm = () => {
 			return;
 		}
 
-		dispatch(addNewAuthor(data));
+		dispatch(addAuthorThunk(data));
 		setAuthorsRenderList([...authorsRenderList, data]);
 	};
 
@@ -129,7 +150,7 @@ const CourseForm = () => {
 		}
 	};
 
-	const handleSubmit = (e) => {
+	const createCourse = (e) => {
 		e.preventDefault();
 
 		if (newCourse.title.length === 0 || newCourse.description.length === 0) {
@@ -159,16 +180,26 @@ const CourseForm = () => {
 			authors: newCourse.authors.map((item) => item.id),
 		};
 
-		dispatch(courseSaved(course));
-		console.log('NEW COURSE', newCourse);
+		dispatch(addCourseThunk(course));
 
 		navigate(`/courses`);
+	};
+
+	const editCourse = (e) => {
+		e.preventDefault();
+
+		dispatch(editCourseThunk(newCourse));
+
+		console.log('EDIT!!!');
 	};
 
 	return (
 		<Wrapper>
 			<Content>
-				<form id='createCourseForm' onSubmit={handleSubmit}>
+				<form
+					id='createCourseForm'
+					onSubmit={!coursePrefilled ? createCourse : editCourse}
+				>
 					<div className='course-info'>
 						<div className='course-info__row'>
 							<div className='course-info__col course-info__col--halfsize'>
@@ -182,7 +213,11 @@ const CourseForm = () => {
 								/>
 							</div>
 							<div className='course-info__col course-info__col--endcontent'>
-								<Button buttonType='submit' buttonText='Create Course' />
+								{coursePrefilled ? (
+									<Button buttonType='submit' buttonText='Edit Course' />
+								) : (
+									<Button buttonType='submit' buttonText='Create Course' />
+								)}
 							</div>
 						</div>
 						<div className='course-info__row course-info__row--full'>
@@ -217,18 +252,20 @@ const CourseForm = () => {
 							<div className='course-info__col course-info__col--centercontent pl-25'>
 								<h3>Authors</h3>
 								{authorsRenderList.length ? (
-									authorsRenderList.map((item) => (
-										<div className='course-info__row' key={item.id}>
-											<div className='course-info__col'>{item.name}</div>
-											<div className='course-info__col'>
-												<Button
-													buttonType='submit'
-													buttonText='Add author'
-													onClick={(e) => addCourseAuthor(e, item.id)}
-												/>
+									authorsRenderList.map((item) => {
+										return (
+											<div className='course-info__row' key={item.id}>
+												<div className='course-info__col'>{item.name}</div>
+												<div className='course-info__col'>
+													<Button
+														buttonType='submit'
+														buttonText='Add author'
+														onClick={(e) => addCourseAuthor(e, item.id)}
+													/>
+												</div>
 											</div>
-										</div>
-									))
+										);
+									})
 								) : (
 									<div className='course-info__row course-info__row--full'>
 										<div className='course-info__col course-info__col--centercontent'>
