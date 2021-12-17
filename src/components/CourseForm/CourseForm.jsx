@@ -252,20 +252,18 @@ const CourseForm = () => {
 							<div className='course-info__col course-info__col--centercontent pl-25'>
 								<h3>Authors</h3>
 								{authorsRenderList.length ? (
-									authorsRenderList.map((item) => {
-										return (
-											<div className='course-info__row' key={item.id}>
-												<div className='course-info__col'>{item.name}</div>
-												<div className='course-info__col'>
-													<Button
-														buttonType='submit'
-														buttonText='Add author'
-														onClick={(e) => addCourseAuthor(e, item.id)}
-													/>
-												</div>
+									authorsRenderList.map((item) => (
+										<div className='course-info__row' key={item.id}>
+											<div className='course-info__col'>{item.name}</div>
+											<div className='course-info__col'>
+												<Button
+													buttonType='submit'
+													buttonText='Add author'
+													onClick={(e) => addCourseAuthor(e, item.id)}
+												/>
 											</div>
-										);
-									})
+										</div>
+									))
 								) : (
 									<div className='course-info__row course-info__row--full'>
 										<div className='course-info__col course-info__col--centercontent'>
