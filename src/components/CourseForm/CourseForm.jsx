@@ -33,7 +33,6 @@ const CourseForm = () => {
 	});
 
 	useEffect(() => {
-		console.log('COURSE PREFILLED!', coursePrefilled);
 		if (coursePrefilled) {
 			setNewCourse({
 				title: coursePrefilled.title,
@@ -43,10 +42,13 @@ const CourseForm = () => {
 				authors: coursePrefilled.authors,
 			});
 		}
-		// eslint-disable-next-line
-	}, []);
+	}, [coursePrefilled]);
 
-	console.log('NEW COURSE PREFILLED', newCourse);
+	useEffect(() => {
+		const durationFormatted = formatDuration(newCourse.duration);
+
+		setCourseDuration(durationFormatted);
+	}, [newCourse.duration]);
 
 	const [courseDuration, setCourseDuration] = useState(courseDurationDefault);
 
@@ -208,7 +210,7 @@ const CourseForm = () => {
 									inputName='title'
 									inputPlaceholder='Enter title...'
 									labelText='Title'
-									value={newCourse.title}
+									inputValue={newCourse.title}
 									onChange={handleChange}
 								/>
 							</div>
@@ -227,7 +229,7 @@ const CourseForm = () => {
 									inputName='description'
 									inputPlaceholder='Enter description'
 									labelText='Description'
-									value={newCourse.description}
+									inputValue={newCourse.description}
 									onChange={handleChange}
 								/>
 							</div>
@@ -281,7 +283,7 @@ const CourseForm = () => {
 									inputName='duration'
 									inputPlaceholder='Enter duration in minutes...'
 									labelText='Duration'
-									value={newCourse.duration}
+									inputValue={newCourse.duration}
 									onChange={handleChange}
 								/>
 								<div className='course-info__row course-info__row--full'>
