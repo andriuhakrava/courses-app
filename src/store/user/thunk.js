@@ -41,8 +41,6 @@ export const logOutUserThunk = () => async (dispatch) => {
 export const fetchCurrentUserThunk = () => async (dispatch) => {
 	const result = await fetchCurrentUser();
 
-	if (!result) return;
-
 	if (result) {
 		dispatch(authenticateUser(result));
 	}
