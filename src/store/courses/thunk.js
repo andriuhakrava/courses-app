@@ -4,7 +4,12 @@ import {
 	deleteCourse,
 	editCourse,
 } from '../../services';
-import { coursesLoaded, courseAdded, courseDeleted } from './actionCreators';
+import {
+	coursesLoaded,
+	courseAdded,
+	courseDeleted,
+	courseEdited,
+} from './actionCreators';
 
 export const fetchCoursesThunk = () => async (dispatch) => {
 	const courses = await fetchCourses();
@@ -28,8 +33,10 @@ export const deleteCourseThunk = (id) => async (dispatch) => {
 	dispatch(courseDeleted(id));
 };
 
-export const editCourseThunk = (data) => async (dispatch) => {
-	const response = await editCourse(data);
+export const editCourseThunk = (id, data) => async (dispatch) => {
+	const response = await editCourse(id, data);
 
-	console.log('EDIT RESPONSE IN THUNK', response);
+	if (response) {
+		dispatch(courseEdited(id, data));
+	}
 };
