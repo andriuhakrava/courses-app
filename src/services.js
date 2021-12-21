@@ -126,24 +126,23 @@ export const deleteCourse = async (id) => {
 	}
 };
 
-export const editCourse = async (course) => {
+export const editCourse = async (id, content) => {
 	const token = getToken();
 
 	try {
-		const response = await fetch(`${BASE_URL}/courses/${course.id}`, {
+		const response = await fetch(`${BASE_URL}/courses/${id}`, {
 			method: 'PUT',
-			body: JSON.stringify(course),
+			body: JSON.stringify(content),
 			headers: {
 				'Content-Type': 'application/json',
 				// eslint-disable-next-line
 				'Authorization': token,
 			},
 		});
-		console.log('EDIT RESPONSE FROM SERVICE', response);
 
 		const data = await response.json();
 
-		console.log('EDIT DATA IN SERVICE', data);
+		return data.result;
 	} catch (error) {
 		console.error(error);
 	}
