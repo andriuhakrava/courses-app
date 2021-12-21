@@ -23,42 +23,66 @@ const CourseForm = () => {
 	const coursePrefilled = useSelector((state) =>
 		getCourseById(state, courseId)
 	);
+	const authorsList = useSelector(getAuthors);
+
+	const [authorsRenderList, setAuthorsRenderList] = useState(authorsList);
+	const [courseAuthorsRenderList, setCourseAuthorsRenderList] = useState([]);
 
 	const [newCourse, setNewCourse] = useState({
 		title: '',
 		description: '',
 		creationDate: Date.parse(new Date()),
-		duration: 0,
+		duration: '',
 		authors: [],
 	});
 
+	const findAuthors = (authors, authorsList) => {
+		const filteredArray = authorsList.reduce((arr, item) => {
+			if (!authors.includes(item.id)) {
+				arr.push(item);
+			}
+			return arr;
+		}, []);
+
+		return filteredArray;
+	};
+
+	const findCourseAuthors = (authors, authorsList) => {
+		const filteredArray = authorsList.reduce((arr, item) => {
+			if (authors.includes(item.id)) {
+				arr.push(item);
+			}
+			return arr;
+		}, []);
+
+		return filteredArray;
+	};
+
 	useEffect(() => {
 		if (coursePrefilled) {
+			const courseAuthors = findCourseAuthors(
+				coursePrefilled.authors,
+				authorsList
+			);
+			setCourseAuthorsRenderList(courseAuthors);
+
 			setNewCourse({
 				title: coursePrefilled.title,
 				description: coursePrefilled.description,
 				creationDate: coursePrefilled.creationDate,
 				duration: coursePrefilled.duration,
-				authors: coursePrefilled.authors,
+				authors: courseAuthors,
 			});
+
+			const authors = findAuthors(coursePrefilled.authors, authorsList);
+			setAuthorsRenderList(authors);
 		}
-	}, [coursePrefilled]);
-
-	useEffect(() => {
-		const durationFormatted = formatDuration(newCourse.duration);
-
-		setCourseDuration(durationFormatted);
-	}, [newCourse.duration]);
+	}, [coursePrefilled, authorsList]);
 
 	const [courseDuration, setCourseDuration] = useState(courseDurationDefault);
-
 	const [authorNew, setAuthorNew] = useState('');
 
-	const authorsList = useSelector(getAuthors);
 	const dispatch = useDispatch();
-
-	const [authorsRenderList, setAuthorsRenderList] = useState(authorsList);
-	const [courseAuthorsRenderList, setCourseAuthorsRenderList] = useState([]);
 
 	const navigate = useNavigate();
 
@@ -87,6 +111,7 @@ const CourseForm = () => {
 		e.preventDefault();
 
 		const authorAdded = authorsRenderList.find((el) => el.id === id);
+
 		const authorsListAfterAdd = authorsRenderList.filter(
 			(author) => author !== authorAdded
 		);
@@ -119,8 +144,8 @@ const CourseForm = () => {
 
 		setNewCourse((prevState) => {
 			return {
-				...newCourse,
-				authors: [...prevState.authors, courseAuthors],
+				...prevState,
+				authors: [...courseAuthors],
 			};
 		});
 	};
@@ -190,9 +215,14 @@ const CourseForm = () => {
 	const editCourse = (e) => {
 		e.preventDefault();
 
-		dispatch(editCourseThunk(newCourse));
+		const course = {
+			...newCourse,
+			authors: newCourse.authors.map((item) => item.id),
+		};
 
-		console.log('EDIT!!!');
+		dispatch(editCourseThunk(courseId, course));
+
+		navigate(`/courses`);
 	};
 
 	return (
