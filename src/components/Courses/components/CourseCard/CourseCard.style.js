@@ -10,7 +10,7 @@ export const Content = styled.div`
 	-webkit-box-shadow: 5px 8px 16px -3px rgba(10, 22, 8, 0.75);
 	-moz-box-shadow: 5px 8px 16px -3px rgba(10, 22, 8, 0.75);
 
-	@media screen and (max-width: 725px) {
+	@media screen and (max-width: 835px) {
 		display: flex;
 		flex-direction: column;
 	}
@@ -22,7 +22,7 @@ export const Content = styled.div`
 			padding-right: 36px;
 		}
 
-		@media screen and (max-width: 600px) {
+		@media screen and (max-width: 835px) {
 			padding-right: 0;
 			margin-bottom: 24px;
 		}
@@ -46,8 +46,8 @@ export const Content = styled.div`
 		overflow: hidden;
 		text-overflow: ellipsis;
 
-		@media screen and (max-width: 500px) {
-			max-width: 400px;
+		@media screen and (max-width: 835px) {
+			max-width: 800px;
 			width: 100%;
 			white-space: normal;
 		}
