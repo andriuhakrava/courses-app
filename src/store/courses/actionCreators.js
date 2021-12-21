@@ -10,9 +10,12 @@ export const coursesLoaded = (data) => ({
 	payload: data,
 });
 
-export const courseEdited = (course) => ({
+export const courseEdited = (id, course) => ({
 	type: EDIT_COURSE,
-	payload: course,
+	payload: {
+		id,
+		course,
+	},
 });
 
 export const courseDeleted = (courseId) => ({

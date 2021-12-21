@@ -17,7 +17,22 @@ export default function coursesReducer(state = coursesInitialState, action) {
 			return [...state, action.payload];
 		}
 		case EDIT_COURSE: {
-			return state;
+			const { id, title, description, duration, creationDate, authors } =
+				action.payload;
+
+			return state.map((item) => {
+				if (item.id === id) {
+					return {
+						...item,
+						title,
+						description,
+						duration,
+						creationDate,
+						authors,
+					};
+				}
+				return item;
+			});
 		}
 		case DELETE_COURSE: {
 			return state.filter((item) => item.id !== action.payload);
