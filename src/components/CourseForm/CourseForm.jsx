@@ -79,6 +79,13 @@ const CourseForm = () => {
 		}
 	}, [coursePrefilled, authorsList]);
 
+	useEffect(() => {
+		const durationFormatted = formatDuration(newCourse.duration);
+
+		setCourseDuration(durationFormatted);
+		// eslint-disable-next-line
+	}, [newCourse.duration]);
+
 	const [courseDuration, setCourseDuration] = useState(courseDurationDefault);
 	const [authorNew, setAuthorNew] = useState('');
 
