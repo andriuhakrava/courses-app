@@ -31,6 +31,7 @@ export const deleteCourseThunk = (id) => async (dispatch) => {
 	await deleteCourse(id);
 
 	dispatch(courseDeleted(id));
+	alert('The course has been deleted!');
 };
 
 export const editCourseThunk = (id, data) => async (dispatch) => {
