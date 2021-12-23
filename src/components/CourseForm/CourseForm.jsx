@@ -111,7 +111,6 @@ const CourseForm = () => {
 		}
 
 		dispatch(addAuthorThunk(data));
-		setAuthorsRenderList([...authorsRenderList, data]);
 	};
 
 	const addCourseAuthor = (e, id) => {
@@ -234,128 +233,130 @@ const CourseForm = () => {
 
 	return (
 		<Wrapper>
-			<Content>
-				<form
-					id='createCourseForm'
-					onSubmit={!coursePrefilled ? createCourse : editCourse}
-				>
-					<div className='course-info'>
-						<div className='course-info__row'>
-							<div className='course-info__col course-info__col--halfsize'>
-								<Input
-									inputType='text'
-									inputName='title'
-									inputPlaceholder='Enter title...'
-									labelText='Title'
-									inputValue={newCourse.title}
-									onChange={handleChange}
-								/>
-							</div>
-							<div className='course-info__col course-info__col--endcontent'>
-								{coursePrefilled ? (
-									<Button buttonType='submit' buttonText='Edit Course' />
-								) : (
-									<Button buttonType='submit' buttonText='Create Course' />
-								)}
-							</div>
-						</div>
-						<div className='course-info__row course-info__row--full'>
-							<div className='course-info__col'>
-								<Input
-									inputType='textarea'
-									inputName='description'
-									inputPlaceholder='Enter description'
-									labelText='Description'
-									inputValue={newCourse.description}
-									onChange={handleChange}
-								/>
-							</div>
-						</div>
-						<div className='course-info__row'>
-							<div className='course-info__col pr-25'>
-								<h3>Add author</h3>
-								<Input
-									inputType='text'
-									inputName='author'
-									inputPlaceholder='Enter author name...'
-									labelText='Author name'
-									value={authorNew}
-									onChange={handleChange}
-								/>
-								<Button
-									buttonType='submit'
-									buttonText='Create author'
-									onClick={createNewAuthor}
-								/>
-							</div>
-							<div className='course-info__col course-info__col--centercontent pl-25'>
-								<h3>Authors</h3>
-								{authorsRenderList.length ? (
-									authorsRenderList.map((item) => (
-										<div className='course-info__row' key={item.id}>
-											<div className='course-info__col'>{item.name}</div>
-											<div className='course-info__col'>
-												<Button
-													buttonType='submit'
-													buttonText='Add author'
-													onClick={(e) => addCourseAuthor(e, item.id)}
-												/>
-											</div>
-										</div>
-									))
-								) : (
-									<div className='course-info__row course-info__row--full'>
-										<div className='course-info__col course-info__col--centercontent'>
-											Author list is empty
-										</div>
-									</div>
-								)}
-							</div>
-						</div>
-						<div className='course-info__row'>
-							<div className='course-info__col pr-25'>
-								<h3>Duration</h3>
-								<Input
-									inputType='number'
-									inputName='duration'
-									inputPlaceholder='Enter duration in minutes...'
-									labelText='Duration'
-									inputValue={newCourse.duration}
-									onChange={handleChange}
-								/>
-								<div className='course-info__row course-info__row--full'>
-									<p className='course-info__duration'>
-										Duration: <span>{courseDuration}</span> hours
-									</p>
+			<div className='container'>
+				<Content>
+					<form
+						id='createCourseForm'
+						onSubmit={!coursePrefilled ? createCourse : editCourse}
+					>
+						<div className='course-info'>
+							<div className='course-info__row'>
+								<div className='course-info__col course-info__col--halfsize'>
+									<Input
+										inputType='text'
+										inputName='title'
+										inputPlaceholder='Enter title...'
+										labelText='Title'
+										inputValue={newCourse.title}
+										onChange={handleChange}
+									/>
+								</div>
+								<div className='course-info__col course-info__col--endcontent'>
+									{coursePrefilled ? (
+										<Button buttonType='submit' buttonText='Edit Course' />
+									) : (
+										<Button buttonType='submit' buttonText='Create Course' />
+									)}
 								</div>
 							</div>
-							<div className='course-info__col course-info__col--centercontent pl-25'>
-								<h3>Course authors</h3>
-								{courseAuthorsRenderList.length ? (
-									courseAuthorsRenderList.map((author) => (
-										<div className='course-info__row' key={author.id}>
-											<div className='course-info__col'>{author.name}</div>
-											<div className='course-info__col course-info__col--startcontent pl-25'>
-												<Button
-													buttonType='submit'
-													buttonText='Delete author'
-													onClick={(e) => deleteCourseAuthor(e, author.id)}
-												/>
+							<div className='course-info__row course-info__row--full'>
+								<div className='course-info__col'>
+									<Input
+										inputType='textarea'
+										inputName='description'
+										inputPlaceholder='Enter description'
+										labelText='Description'
+										inputValue={newCourse.description}
+										onChange={handleChange}
+									/>
+								</div>
+							</div>
+							<div className='course-info__row'>
+								<div className='course-info__col pr-25'>
+									<h3>Add author</h3>
+									<Input
+										inputType='text'
+										inputName='author'
+										inputPlaceholder='Enter author name...'
+										labelText='Author name'
+										value={authorNew}
+										onChange={handleChange}
+									/>
+									<Button
+										buttonType='submit'
+										buttonText='Create author'
+										onClick={createNewAuthor}
+									/>
+								</div>
+								<div className='course-info__col course-info__col--centercontent pl-25'>
+									<h3>Authors</h3>
+									{authorsRenderList.length ? (
+										authorsRenderList.map((item) => (
+											<div className='course-info__row' key={item.id}>
+												<div className='course-info__col'>{item.name}</div>
+												<div className='course-info__col'>
+													<Button
+														buttonType='submit'
+														buttonText='Add author'
+														onClick={(e) => addCourseAuthor(e, item.id)}
+													/>
+												</div>
+											</div>
+										))
+									) : (
+										<div className='course-info__row course-info__row--full'>
+											<div className='course-info__col course-info__col--centercontent'>
+												Author list is empty
 											</div>
 										</div>
-									))
-								) : (
+									)}
+								</div>
+							</div>
+							<div className='course-info__row'>
+								<div className='course-info__col pr-25'>
+									<h3>Duration</h3>
+									<Input
+										inputType='number'
+										inputName='duration'
+										inputPlaceholder='Enter duration in minutes...'
+										labelText='Duration'
+										inputValue={newCourse.duration}
+										onChange={handleChange}
+									/>
 									<div className='course-info__row course-info__row--full'>
-										<div className='course-info__col course-info__col--centercontent'>
-											Author list is empty
-										</div>
+										<p className='course-info__duration'>
+											Duration: <span>{courseDuration}</span> hours
+										</p>
 									</div>
-								)}
+								</div>
+								<div className='course-info__col course-info__col--centercontent pl-25'>
+									<h3>Course authors</h3>
+									{courseAuthorsRenderList.length ? (
+										courseAuthorsRenderList.map((author) => (
+											<div className='course-info__row' key={author.id}>
+												<div className='course-info__col'>{author.name}</div>
+												<div className='course-info__col course-info__col--startcontent pl-25'>
+													<Button
+														buttonType='submit'
+														buttonText='Delete author'
+														onClick={(e) => deleteCourseAuthor(e, author.id)}
+													/>
+												</div>
+											</div>
+										))
+									) : (
+										<div className='course-info__row course-info__row--full'>
+											<div className='course-info__col course-info__col--centercontent'>
+												Author list is empty
+											</div>
+										</div>
+									)}
+								</div>
 							</div>
 						</div>
-					</div>
-				</form>
-			</Content>
+					</form>
+				</Content>
+			</div>
 		</Wrapper>
 	);
 };
