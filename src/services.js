@@ -112,7 +112,7 @@ export const deleteCourse = async (id) => {
 	const token = getToken();
 
 	try {
-		const response = await fetch(`${BASE_URL}/courses/${id}`, {
+		await fetch(`${BASE_URL}/courses/${id}`, {
 			method: 'DELETE',
 			headers: {
 				'Content-Type': 'application/json',
@@ -120,7 +120,6 @@ export const deleteCourse = async (id) => {
 				'Authorization': token,
 			},
 		});
-		if (response.status === 200) return true;
 	} catch (error) {
 		console.error(error);
 	}
