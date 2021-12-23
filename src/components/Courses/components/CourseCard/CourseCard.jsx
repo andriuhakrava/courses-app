@@ -61,14 +61,11 @@ const CourseCard = ({ course }) => {
 	};
 
 	useEffect(() => {
-		if (authors) {
-			const courseCardAuthors = findAuthors(authors, authorsList);
-			const courseCardAuthorsFormatted = formatAuthors(courseCardAuthors);
+		const courseCardAuthors = findAuthors(authors, authorsList);
+		const courseCardAuthorsFormatted = formatAuthors(courseCardAuthors);
 
-			setCourseAuthors(courseCardAuthorsFormatted);
-		}
-		// eslint-disable-next-line
-	}, [course]);
+		setCourseAuthors(courseCardAuthorsFormatted);
+	}, [authors, authorsList]);
 
 	useEffect(() => {
 		const durationFormatted = formatDuration(duration);
