@@ -37,6 +37,6 @@ export const editCourseThunk = (id, data) => async (dispatch) => {
 	const response = await editCourse(id, data);
 
 	if (response) {
-		dispatch(courseEdited(id, data));
+		dispatch(courseEdited(response));
 	}
 };
