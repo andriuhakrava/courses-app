@@ -43,5 +43,10 @@ export const fetchCurrentUserThunk = () => async (dispatch) => {
 
 	if (result) {
 		dispatch(authenticateUser(result));
+	} else {
+		removeToken();
+		removeUserName();
+
+		dispatch(logOutUser());
 	}
 };
