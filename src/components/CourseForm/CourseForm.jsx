@@ -236,6 +236,7 @@ const CourseForm = () => {
 		<Wrapper>
 			<Content>
 				<form
+					data-testid='courseForm'
 					id='createCourseForm'
 					onSubmit={!coursePrefilled ? createCourse : editCourse}
 				>
@@ -290,26 +291,28 @@ const CourseForm = () => {
 							</div>
 							<div className='course-info__col course-info__col--centercontent pl-25'>
 								<h3>Authors</h3>
-								{authorsRenderList.length ? (
-									authorsRenderList.map((item) => (
-										<div className='course-info__row' key={item.id}>
-											<div className='course-info__col'>{item.name}</div>
-											<div className='course-info__col'>
-												<Button
-													buttonType='submit'
-													buttonText='Add author'
-													onClick={(e) => addCourseAuthor(e, item.id)}
-												/>
+								<ul data-testid='authors-list'>
+									{authorsRenderList.length ? (
+										authorsRenderList.map((item) => (
+											<li className='course-info__row' key={item.id}>
+												<div className='course-info__col'>{item.name}</div>
+												<div className='course-info__col'>
+													<Button
+														buttonType='submit'
+														buttonText='Add author'
+														onClick={(e) => addCourseAuthor(e, item.id)}
+													/>
+												</div>
+											</li>
+										))
+									) : (
+										<div className='course-info__row course-info__row--full'>
+											<div className='course-info__col course-info__col--centercontent'>
+												Author list is empty
 											</div>
 										</div>
-									))
-								) : (
-									<div className='course-info__row course-info__row--full'>
-										<div className='course-info__col course-info__col--centercontent'>
-											Author list is empty
-										</div>
-									</div>
-								)}
+									)}
+								</ul>
 							</div>
 						</div>
 						<div className='course-info__row'>
@@ -331,26 +334,28 @@ const CourseForm = () => {
 							</div>
 							<div className='course-info__col course-info__col--centercontent pl-25'>
 								<h3>Course authors</h3>
-								{courseAuthorsRenderList.length ? (
-									courseAuthorsRenderList.map((author) => (
-										<div className='course-info__row' key={author.id}>
-											<div className='course-info__col'>{author.name}</div>
-											<div className='course-info__col course-info__col--startcontent pl-25'>
-												<Button
-													buttonType='submit'
-													buttonText='Delete author'
-													onClick={(e) => deleteCourseAuthor(e, author.id)}
-												/>
+								<ul data-testid='course-authors-list'>
+									{courseAuthorsRenderList.length ? (
+										courseAuthorsRenderList.map((author) => (
+											<li className='course-info__row' key={author.id}>
+												<div className='course-info__col'>{author.name}</div>
+												<div className='course-info__col course-info__col--startcontent pl-25'>
+													<Button
+														buttonType='submit'
+														buttonText='Delete author'
+														onClick={(e) => deleteCourseAuthor(e, author.id)}
+													/>
+												</div>
+											</li>
+										))
+									) : (
+										<div className='course-info__row course-info__row--full'>
+											<div className='course-info__col course-info__col--centercontent'>
+												Author list is empty
 											</div>
 										</div>
-									))
-								) : (
-									<div className='course-info__row course-info__row--full'>
-										<div className='course-info__col course-info__col--centercontent'>
-											Author list is empty
-										</div>
-									</div>
-								)}
+									)}
+								</ul>
 							</div>
 						</div>
 					</div>
