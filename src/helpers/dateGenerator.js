@@ -1,14 +1,13 @@
 import addZero from './addZero';
 
 export const formatDate = (creationDate) => {
-	let dateFormatted = new Date(creationDate);
+	let dateFormatted;
 
-	dateFormatted =
-		addZero(dateFormatted.getMonth() + 1) +
-		'.' +
-		addZero(dateFormatted.getDate()) +
-		'.' +
-		dateFormatted.getFullYear();
+	const day = creationDate.slice(0, 2);
+	const month = creationDate.slice(3, 5);
+	const year = creationDate.slice(6);
+
+	dateFormatted = addZero(day) + '.' + addZero(month) + '.' + year;
 
 	return dateFormatted;
 };

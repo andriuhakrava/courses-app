@@ -8,6 +8,7 @@ import { getCourses } from '../../../../store/courses/selectors.js';
 import { getAuthors } from '../../../../store/authors/selectors.js';
 
 import formatDuration from '../../../../helpers/pipeDuration.js';
+import formatDate from '../../../../helpers/dateGenerator.js';
 
 import { Wrapper, Content } from './CourseInfo.style.js';
 
@@ -17,6 +18,7 @@ const CourseInfo = () => {
 	const { courseId } = useParams();
 	const navigate = useNavigate();
 	const [courseDuration, setCourseDuration] = useState(0);
+	const [courseDate, setCourseDate] = useState('');
 	const [courseAuthor, setCourseAuthor] = useState([]);
 
 	const backToCourses = () => {
@@ -36,6 +38,13 @@ const CourseInfo = () => {
 
 		setCourseDuration(durationFormatted);
 	}, [course, duration]);
+
+	useEffect(() => {
+		if (!course) return;
+		const dateFormatted = formatDate(creationDate);
+
+		setCourseDate(dateFormatted);
+	}, [course, creationDate]);
 
 	useEffect(() => {
 		if (!course) return;
@@ -97,7 +106,7 @@ const CourseInfo = () => {
 							</div>
 							<div className='course-info__item'>
 								<h3 className='course-info__title'>Created:</h3>
-								<span>{creationDate}</span>
+								<span>{courseDate}</span>
 							</div>
 							<div className='course-info__item'>
 								<h3 className='course-info__title'>Authors:</h3>
