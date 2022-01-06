@@ -17,6 +17,6 @@ export const addAuthorThunk = (author) => async (dispatch) => {
 	if (!result) return;
 
 	if (result) {
-		dispatch(addAuthor(author));
+		dispatch(addAuthor(result));
 	}
 };
