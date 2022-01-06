@@ -41,6 +41,13 @@ export const logOutUserThunk = () => async (dispatch) => {
 export const fetchCurrentUserThunk = () => async (dispatch) => {
 	const result = await fetchCurrentUser();
 
+	if (!result) {
+		removeToken();
+		removeUserName();
+
+		dispatch(logOutUser());
+	}
+
 	if (result) {
 		dispatch(authenticateUser(result));
 	}
