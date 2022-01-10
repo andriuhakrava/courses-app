@@ -10,7 +10,7 @@ export const Content = styled.div`
 	-webkit-box-shadow: 5px 8px 16px -3px rgba(10, 22, 8, 0.75);
 	-moz-box-shadow: 5px 8px 16px -3px rgba(10, 22, 8, 0.75);
 
-	@media screen and (max-width: 835px) {
+	@media screen and (max-width: 1000px) {
 		display: flex;
 		flex-direction: column;
 	}
@@ -18,11 +18,7 @@ export const Content = styled.div`
 	.course-description {
 		padding-right: 72px;
 
-		@media screen and (max-width: 768px) {
-			padding-right: 36px;
-		}
-
-		@media screen and (max-width: 835px) {
+		@media screen and (max-width: 1000px) {
 			padding-right: 0;
 			margin-bottom: 24px;
 		}
@@ -47,7 +43,6 @@ export const Content = styled.div`
 		text-overflow: ellipsis;
 
 		@media screen and (max-width: 835px) {
-			max-width: 800px;
 			width: 100%;
 			white-space: normal;
 		}
@@ -65,6 +60,10 @@ export const Content = styled.div`
 		@media screen and (max-width: 475px) {
 			justify-content: center;
 			margin-top: 22px;
+
+			button:first-of-type {
+				margin-left: 0;
+			}
 		}
 
 		button {
