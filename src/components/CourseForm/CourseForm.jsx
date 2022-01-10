@@ -110,8 +110,10 @@ const CourseForm = () => {
 			return;
 		}
 
-		dispatch(addAuthorThunk(data));
-		setAuthorsRenderList([...authorsRenderList, data]);
+		dispatch(addAuthorThunk(data)).then((response) => {
+			setAuthorsRenderList([...authorsRenderList, response]);
+			alert('New author has been added!');
+		});
 	};
 
 	const addCourseAuthor = (e, id) => {
@@ -216,6 +218,8 @@ const CourseForm = () => {
 
 		dispatch(addCourseThunk(course));
 
+		alert('New course has been added!');
+
 		navigate(`/courses`);
 	};
 
@@ -228,6 +232,8 @@ const CourseForm = () => {
 		};
 
 		dispatch(editCourseThunk(courseId, course));
+
+		alert('Course has been edited!');
 
 		navigate(`/courses`);
 	};
