@@ -23,7 +23,7 @@ export const Wrapper = styled.div`
 	}
 `;
 
-export const Content = styled.div`
+export const Content = styled.ul`
 	display: grid;
 	grid-template-columns: repeat(1, 1fr);
 	row-gap: 20px;

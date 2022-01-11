@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Content = styled.div`
+export const Content = styled.li`
 	display: grid;
 	grid-template-columns: 2fr 1fr;
 	background: #d3e4cd;
