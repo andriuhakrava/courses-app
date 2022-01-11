@@ -17,17 +17,3 @@ test('displays amount of course card entities', () => {
 
 	expect(mockedCourses).toHaveLength(3);
 });
-
-test('displays amount of course card entities', () => {
-	const mockedCourses = [];
-
-	render(
-		<Provider store={mockedStore}>
-			<BrowserRouter>
-				<CoursesList courses={mockedCourses} />
-			</BrowserRouter>
-		</Provider>
-	);
-
-	expect(mockedCourses.length).toEqual(0);
-});
