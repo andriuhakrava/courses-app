@@ -88,9 +88,13 @@ const Courses = () => {
 						onClick={showCreateCourseForm}
 					/>
 				</Wrapper>
-				<Content>
-					<CoursesList courses={coursesRenderList} />
-				</Content>
+				{coursesRenderList.length ? (
+					<Content>
+						<CoursesList courses={coursesRenderList} />
+					</Content>
+				) : (
+					<div>Courses list is empty</div>
+				)}
 			</>
 		</div>
 	);
