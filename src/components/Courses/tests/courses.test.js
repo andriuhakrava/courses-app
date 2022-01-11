@@ -1,35 +1,73 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, fireEvent } from '@testing-library/react';
+import { screen } from '@testing-library/dom';
+
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
+
 import Courses from '../Courses.jsx';
-import mockedStore from '../../../store/tests/mockedStore.js';
+import CoursesList from '../components/CoursesList/CoursesList.jsx';
+import Button from '../../../common/Button/Button.jsx';
+
+const mockedState = {
+	user: {
+		isAuth: true,
+		name: 'Test Name',
+		email: 'Test Email',
+		role: '',
+		token: 'Test Token',
+	},
+	courses: [],
+	authors: [],
+};
+
+const mockedStore = {
+	getState: () => mockedState,
+	subscribe: jest.fn(),
+	dispatch: jest.fn(),
+};
 
 test('shows CreateForm after a click on a button "Add new course"', () => {
 	const history = createMemoryHistory();
+	const showAddCourseForm = () => history.push('/courses/add');
 
-	render(
+	const { getByText } = render(
 		<Provider store={mockedStore}>
-			<Router location={history.location} navigator={history}>
-				<Courses />
-			</Router>
+			<BrowserRouter location={history.location} navigator={history}>
+				<Button
+					buttonType='button'
+					buttonText='Add new course'
+					onClick={showAddCourseForm}
+				/>
+			</BrowserRouter>
 		</Provider>
 	);
 
-	userEvent.click(screen.getByText(/add new course/i));
+	const addCourseBtn = getByText(/add new course/i);
+
+	fireEvent.click(addCourseBtn);
 
 	expect(history.location.pathname).toEqual('/courses/add');
 });
 
 test('displays empty container if courses array length is 0', () => {
-	const history = createMemoryHistory();
+	const mockedCourses = [];
 
 	render(
 		<Provider store={mockedStore}>
-			<Router location={history.location} navigator={history}>
-				<Courses />
-			</Router>
+			<BrowserRouter>
+				<Courses>
+					<CoursesList courses={mockedCourses} />
+				</Courses>
+			</BrowserRouter>
 		</Provider>
 	);
+
+	expect(mockedCourses.length).toEqual(0);
+
+	const list = screen.queryByRole('list');
+
+	expect(list).not.toBeInTheDocument();
+
+	expect(screen.getByText(/courses list is empty/i)).toBeInTheDocument();
 });
