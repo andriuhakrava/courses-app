@@ -301,9 +301,15 @@ const CourseForm = () => {
 									{authorsRenderList.length ? (
 										authorsRenderList.map((item) => (
 											<li className='course-info__row' key={item.id}>
-												<div className='course-info__col'>{item.name}</div>
+												<div
+													className='course-info__col'
+													data-testid='authorName'
+												>
+													{item.name}
+												</div>
 												<div className='course-info__col'>
 													<Button
+														dataTestId='addAuthorButton'
 														buttonType='submit'
 														buttonText='Add author'
 														onClick={(e) => addCourseAuthor(e, item.id)}
@@ -344,9 +350,15 @@ const CourseForm = () => {
 									{courseAuthorsRenderList.length ? (
 										courseAuthorsRenderList.map((author) => (
 											<li className='course-info__row' key={author.id}>
-												<div className='course-info__col'>{author.name}</div>
+												<div
+													className='course-info__col'
+													data-testid='courseAuthorName'
+												>
+													{author.name}
+												</div>
 												<div className='course-info__col course-info__col--startcontent pl-25'>
 													<Button
+														dataTestId='deleteAuthorButton'
 														buttonType='submit'
 														buttonText='Delete author'
 														onClick={(e) => deleteCourseAuthor(e, author.id)}
