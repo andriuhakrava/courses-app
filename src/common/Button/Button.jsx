@@ -9,6 +9,7 @@ const Button = ({
 	buttonImage,
 	buttonImageText,
 	onClick,
+	dataTestId,
 }) => {
 	if (buttonImage) {
 		return (
@@ -19,7 +20,7 @@ const Button = ({
 	}
 
 	return (
-		<ButtonStyled type={buttonType} onClick={onClick}>
+		<ButtonStyled type={buttonType} onClick={onClick} data-testid={dataTestId}>
 			{buttonText}
 		</ButtonStyled>
 	);
