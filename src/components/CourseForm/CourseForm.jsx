@@ -290,6 +290,7 @@ const CourseForm = () => {
 									onChange={handleChange}
 								/>
 								<Button
+									dataTestId='createAuthorButton'
 									buttonType='submit'
 									buttonText='Create author'
 									onClick={createNewAuthor}

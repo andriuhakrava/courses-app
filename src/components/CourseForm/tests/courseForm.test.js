@@ -86,6 +86,7 @@ test(`'Create author' click button calls dispatch`, () => {
 		<Provider store={mockedStore}>
 			<BrowserRouter>
 				<Button
+					dataTestId='createAuthorButton'
 					buttonType='submit'
 					buttonText='Create author'
 					onClick={handleClick}
@@ -94,7 +95,7 @@ test(`'Create author' click button calls dispatch`, () => {
 		</Provider>
 	);
 
-	const createAuthorBtn = screen.getByRole('button');
+	const createAuthorBtn = screen.getByTestId('createAuthorButton');
 
 	expect(createAuthorBtn).toBeInTheDocument();
 
