@@ -9,23 +9,7 @@ import Courses from '../Courses.jsx';
 import CoursesList from '../components/CoursesList/CoursesList.jsx';
 import Button from '../../../common/Button/Button.jsx';
 
-const mockedState = {
-	user: {
-		isAuth: true,
-		name: 'Test Name',
-		email: 'Test Email',
-		role: '',
-		token: 'Test Token',
-	},
-	courses: [],
-	authors: [],
-};
-
-const mockedStore = {
-	getState: () => mockedState,
-	subscribe: jest.fn(),
-	dispatch: jest.fn(),
-};
+import mockedStore from './data';
 
 test('shows CreateForm after a click on a button "Add new course"', () => {
 	const history = createMemoryHistory();
