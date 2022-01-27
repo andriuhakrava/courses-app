@@ -2,7 +2,7 @@ import { render, fireEvent } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
 
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 import Courses from '../Courses.jsx';
@@ -17,13 +17,13 @@ test('shows CreateForm after a click on a button "Add new course"', () => {
 
 	const { getByText } = render(
 		<Provider store={mockedStore}>
-			<BrowserRouter location={history.location} navigator={history}>
+			<MemoryRouter location={history.location} navigator={history}>
 				<Button
 					buttonType='button'
 					buttonText='Add new course'
 					onClick={showAddCourseForm}
 				/>
-			</BrowserRouter>
+			</MemoryRouter>
 		</Provider>
 	);
 
