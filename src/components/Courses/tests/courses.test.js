@@ -2,28 +2,26 @@ import { render, fireEvent } from '@testing-library/react';
 import { screen } from '@testing-library/dom';
 
 import { Provider } from 'react-redux';
-import { BrowserRouter, MemoryRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 
 import Courses from '../Courses.jsx';
 import CoursesList from '../components/CoursesList/CoursesList.jsx';
-import Button from '../../../common/Button/Button.jsx';
+import CourseForm from '../../CourseForm/CourseForm.jsx';
 
 import mockedStore from './data';
 
 test('shows CreateForm after a click on a button "Add new course"', () => {
 	const history = createMemoryHistory();
-	const showAddCourseForm = () => history.push('/courses/add');
 
 	const { getByText } = render(
 		<Provider store={mockedStore}>
-			<MemoryRouter location={history.location} navigator={history}>
-				<Button
-					buttonType='button'
-					buttonText='Add new course'
-					onClick={showAddCourseForm}
-				/>
-			</MemoryRouter>
+			<BrowserRouter history={history}>
+				<Routes>
+					<Route path='/' element={<Courses />} />
+					<Route path='/courses/add' element={<CourseForm />} />
+				</Routes>
+			</BrowserRouter>
 		</Provider>
 	);
 
@@ -31,7 +29,9 @@ test('shows CreateForm after a click on a button "Add new course"', () => {
 
 	fireEvent.click(addCourseBtn);
 
-	expect(history.location.pathname).toEqual('/courses/add');
+	const courseFormElement = screen.getByTestId('courseForm');
+
+	expect(courseFormElement).toBeInTheDocument();
 });
 
 test('displays empty container if courses array length is 0', () => {
